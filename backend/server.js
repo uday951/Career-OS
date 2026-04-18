@@ -62,4 +62,25 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+
+  // ── Self-Ping (Render Free Tier Keep-Alive) ─────────────────────────────
+  // Render free tier sleeps after 15 min of inactivity.
+  // Pinging /api/health every 14 min keeps the server always awake.
+  // Only runs in production — zero impact on local dev.
+  if (process.env.NODE_ENV === 'production') {
+    const PING_INTERVAL_MS = 14 * 60 * 1000; // 14 minutes
+
+    setInterval(async () => {
+      try {
+        const url = `http://localhost:${PORT}/api/health`;
+        const res = await fetch(url);
+        const data = await res.json();
+        console.log(`[self-ping] ✅ ${new Date().toISOString()} — status: ${data.status}`);
+      } catch (err) {
+        console.warn(`[self-ping] ⚠️  Failed: ${err.message}`);
+      }
+    }, PING_INTERVAL_MS);
+
+    console.log(`[self-ping] 🔄 Keep-alive active — pinging every 14 minutes`);
+  }
 });
