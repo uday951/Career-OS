@@ -11,12 +11,15 @@ const FEATURES = [
   { icon: Shield, label: 'ATS Optimizer', desc: 'Beat the screening algorithms' },
 ];
 
-export default function Auth() {
+export default function Auth({ googleClientId }) {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { setUser } = useStore();
+  
+  // Debug Google Client ID
+  console.log('🔐 Auth Component - Google Client ID:', googleClientId ? 'Present ✅' : 'Missing ❌');
 
   const handleGoogleSuccess = async (credentialResponse) => {
     setLoading(true);
@@ -201,16 +204,27 @@ export default function Auth() {
             </div>
 
             {/* Google Sign-In */}
-            <div className="flex justify-center">
-              <GoogleLogin
-                onSuccess={handleGoogleSuccess}
-                onError={handleGoogleError}
-                theme="filled_black"
-                size="large"
-                text={isLogin ? 'signin_with' : 'signup_with'}
-                width="100%"
-                logo_alignment="left"
-              />
+            <div className="flex flex-col items-center gap-3">
+              {!googleClientId && (
+                <div className="w-full bg-warning/10 border border-warning/30 rounded-lg px-3 py-2 text-xs text-warning text-center">
+                  ⚠️ Google Sign-In unavailable: Client ID not configured
+                </div>
+              )}
+              {googleClientId ? (
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={handleGoogleError}
+                  theme="filled_black"
+                  size="large"
+                  text={isLogin ? 'signin_with' : 'signup_with'}
+                  width="100%"
+                  logo_alignment="left"
+                />
+              ) : (
+                <div className="w-full py-3 px-4 bg-white/5 border border-white/10 rounded-lg text-center text-sm text-textMuted">
+                  Google Sign-In (Configure VITE_GOOGLE_CLIENT_ID)
+                </div>
+              )}
             </div>
 
             {/* Switch */}

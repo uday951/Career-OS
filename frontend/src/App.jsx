@@ -156,13 +156,25 @@ function AppLayout({ children }) {
 function App() {
   const isAuthenticated = useStore(s => s.isAuthenticated);
   
-  // Get Google Client ID from environment variable
+  // Get Google Client ID from environment variable with debugging
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  
+  // Debug logging for production
+  console.log('🔐 Google OAuth Debug:');
+  console.log('Environment:', import.meta.env.MODE);
+  console.log('Client ID exists:', !!googleClientId);
+  console.log('Client ID length:', googleClientId?.length || 0);
+  
+  // Warning if client ID is missing
+  if (!googleClientId) {
+    console.error('❌ VITE_GOOGLE_CLIENT_ID is not set! Google OAuth will not work.');
+    console.error('Add VITE_GOOGLE_CLIENT_ID to your Render environment variables.');
+  }
   
   if (!isAuthenticated) {
     return (
       <GoogleOAuthProvider clientId={googleClientId || ''}>
-        <Auth />
+        <Auth googleClientId={googleClientId} />
       </GoogleOAuthProvider>
     );
   }
