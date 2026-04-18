@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Environment Variables — NEVER commit these
+backend/.env
+frontend/.env
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+build/
+.vite/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+.idea/
+
+# Uploaded files (runtime)
+backend/uploads/
