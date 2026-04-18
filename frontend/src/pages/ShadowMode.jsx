@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useStore from '../store/useStore';
+import API_BASE from '../config/api';
 import {
   Shield, Loader2, AlertTriangle, CheckCircle2, TrendingUp, TrendingDown,
   Zap, Target, XCircle, ChevronDown, ChevronUp, Sparkles, Clock,
@@ -224,7 +225,7 @@ export default function ShadowMode() {
 
   // Fetch resume profile on mount
   useEffect(() => {
-    axios.get('http://localhost:5000/api/coach/profile', config)
+    axios.get(`${API_BASE}/api/coach/profile`, config)
       .then(({ data }) => setResumeProfile(data.found ? data : null))
       .catch(() => setResumeProfile(null))
       .finally(() => setProfileLoading(false));
@@ -237,7 +238,7 @@ export default function ShadowMode() {
     setResult(null);
     setError('');
     try {
-      const { data } = await axios.post('http://localhost:5000/api/shadow/analyze', {
+      const { data } = await axios.post(`${API_BASE}/api/shadow/analyze`, {
         jobTitle, companyName, jobDescription: jobDesc
       }, config);
       setResult(data);

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useStore from '../store/useStore';
+import API_BASE from '../config/api';
 import { ArrowLeft, Loader2, Target, FileText, Bot, Compass, CheckCircle2, AlertTriangle, Building2, ExternalLink } from 'lucide-react';
 
 export default function ApplicationHub() {
@@ -15,7 +16,7 @@ export default function ApplicationHub() {
     const loadApplication = async () => {
       try {
         const config = { headers: { Authorization: `Bearer ${token}` } };
-        const { data } = await axios.get(`http://localhost:5000/api/jobs/application/${id}`, config);
+        const { data } = await axios.get(`${API_BASE}/api/jobs/application/${id}`, config);
         setAppData(data);
       } catch (err) {
         alert('Could not load application hub data.');

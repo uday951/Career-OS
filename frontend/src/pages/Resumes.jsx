@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useStore from '../store/useStore';
+import API_BASE from '../config/api';
 import { Upload, FileText, CheckCircle, Sparkles, Loader2, Code2, Copy, X, Eye } from 'lucide-react';
 
 // Renders a Jake's-resume-style HTML preview from parsed resume JSON
@@ -147,7 +148,7 @@ export default function Resumes() {
 
   const fetchResumes = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/resumes', config);
+      const { data } = await axios.get(`${API_BASE}/api/resumes`, config);
       setResumes(data);
     } catch (err) {
       console.error(err);
@@ -164,7 +165,7 @@ export default function Resumes() {
       formData.append('title', title);
       formData.append('resumeFile', file);
 
-      const { data } = await axios.post('http://localhost:5000/api/resumes/upload', formData, {
+      const { data } = await axios.post(`${API_BASE}/api/resumes/upload`, formData, {
         headers: { ...config.headers, 'Content-Type': 'multipart/form-data' }
       });
       
@@ -182,7 +183,7 @@ export default function Resumes() {
   const triggerAiParse = async (id) => {
     setParsingId(id);
     try {
-      const { data } = await axios.post(`http://localhost:5000/api/ai/parse-resume/${id}`, {}, config);
+      const { data } = await axios.post(`${API_BASE}/api/ai/parse-resume/${id}`, {}, config);
       setResumes(resumes.map(r => r._id === id ? data : r));
       fetchResumes();
     } catch (err) {
@@ -205,7 +206,7 @@ export default function Resumes() {
     setLatexGenerating(true);
     setLatexCode('');
     try {
-      const { data } = await axios.post('http://localhost:5000/api/ai/latex-resume', { resumeId: activeResumeId, targetRole }, config);
+      const { data } = await axios.post(`${API_BASE}/api/ai/latex-resume`, { resumeId: activeResumeId, targetRole }, config);
       setLatexCode(data.latex_code);
       setActiveTab('code'); // auto-switch to code tab after generation
     } catch (err) {

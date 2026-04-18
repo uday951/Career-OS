@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 import useStore from '../store/useStore';
+import API_BASE from '../config/api';
 import {
   Send, Sparkles, Bot, User, Loader2, RotateCcw, Copy, ThumbsUp,
   Briefcase, Target, FileText, TrendingUp, MessageSquare, Zap,
@@ -170,7 +171,7 @@ export default function AICoach() {
 
   // Fetch candidate profile (name, skills, role from resume)
   useEffect(() => {
-    axios.get('http://localhost:5000/api/coach/profile', config)
+    axios.get(`${API_BASE}/api/coach/profile`, config)
       .then(({ data }) => setCandidateProfile(data))
       .catch(() => {}); // silently fail — name is cosmetic
   }, [token]);
@@ -226,7 +227,7 @@ export default function AICoach() {
     setThinking(true);
 
     try {
-      const { data } = await axios.post('http://localhost:5000/api/coach/chat', {
+      const { data } = await axios.post(`${API_BASE}/api/coach/chat`, {
         messages: updatedHistory.map(m => ({ role: m.role, content: m.content })),
         contextData: buildContext(),
       }, config);

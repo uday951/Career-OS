@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useStore from '../store/useStore';
+import API_BASE from '../config/api';
 import { useNavigate } from 'react-router-dom';
 import {
   Search, Loader2, Bot, Bookmark, Link as LinkIcon, Building2, MapPin,
@@ -59,7 +60,7 @@ export default function JobDiscovery() {
     setDiscoveredJobs([]);
     try {
       const { data } = await axios.get(
-        `http://localhost:5000/api/ai/discover-jobs${buildParams(query)}`,
+        `${API_BASE}/api/ai/discover-jobs${buildParams(query)}`,
         config
       );
       setDiscoveredJobs(data);
@@ -84,7 +85,7 @@ export default function JobDiscovery() {
   const handlePrepareApplication = async (jobData, idx) => {
     setPreparingId(idx);
     try {
-      const { data } = await axios.post('http://localhost:5000/api/jobs/auto-apply', jobData, config);
+      const { data } = await axios.post(`${API_BASE}/api/jobs/auto-apply`, jobData, config);
       setPreparedJobs(prev => ({ ...prev, [idx]: data }));
       navigate(`/application/${data.job_id}`);
     } catch (err) {
@@ -101,7 +102,7 @@ export default function JobDiscovery() {
     }
     setIntelLoadingId(idx);
     try {
-      const { data } = await axios.post('http://localhost:5000/api/ai/company-intel', { company, role }, config);
+      const { data } = await axios.post(`${API_BASE}/api/ai/company-intel`, { company, role }, config);
       setIntelData(prev => ({ ...prev, [idx]: data }));
     } catch {
       alert('Could not fetch intelligence for this company');

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import useStore from '../store/useStore';
+import API_BASE from '../config/api';
 import {
   Cpu, Loader2, MapPin, Globe, Briefcase, Link as LinkIcon,
   CheckCircle2, AlertTriangle, Clock, TrendingUp, Star,
@@ -186,7 +187,7 @@ export default function ReverseRecruiter() {
     setResult(null);
     setError('');
     try {
-      const { data } = await axios.post('http://localhost:5000/api/reverse/jobs', {
+      const { data } = await axios.post(`${API_BASE}/api/reverse/jobs`, {
         query,
         location:        location.trim() || undefined,
         employment_type: employmentType !== 'any' ? employmentType : undefined,

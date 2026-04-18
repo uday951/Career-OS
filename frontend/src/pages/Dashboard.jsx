@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useStore from '../store/useStore';
+import API_BASE from '../config/api';
 import {
   Target, FileText, Briefcase, Zap, TrendingUp, TrendingDown,
   Clock, CheckCircle2, XCircle, Flame, ArrowRight, Search,
@@ -88,8 +89,8 @@ export default function Dashboard() {
       const cfg = { headers: { Authorization: `Bearer ${token}` } };
       try {
         const [j, r] = await Promise.all([
-          axios.get('http://localhost:5000/api/jobs', cfg).catch(() => ({ data: [] })),
-          axios.get('http://localhost:5000/api/resumes', cfg).catch(() => ({ data: [] })),
+          axios.get(`${API_BASE}/api/jobs`, cfg).catch(() => ({ data: [] })),
+          axios.get(`${API_BASE}/api/resumes`, cfg).catch(() => ({ data: [] })),
         ]);
         useStore.getState().setJobs(j.data);
         useStore.getState().setResumes(r.data);

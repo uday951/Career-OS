@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useStore from '../store/useStore';
+import API_BASE from '../config/api';
 import {
   BarChart2, Loader2, TrendingUp, TrendingDown, Minus,
   AlertTriangle, CheckCircle2, Zap, Target, ArrowRight,
@@ -121,7 +122,7 @@ export default function WeeklyReport() {
     setReport(null);
     setError('');
     try {
-      const { data } = await axios.get('http://localhost:5000/api/report/weekly', config);
+      const { data } = await axios.get(`${API_BASE}/api/report/weekly`, config);
       setReport(data);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to generate report. Add some applications and try again.');

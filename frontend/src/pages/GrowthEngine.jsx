@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import useStore from '../store/useStore';
+import API_BASE from '../config/api';
 import {
   TrendingUp, Loader2, Target, Clock, Zap, BookOpen, Code2,
   CheckCircle2, AlertTriangle, ChevronDown, ChevronUp, Star,
@@ -181,7 +182,7 @@ export default function GrowthEngine() {
     setError('');
     setTargetRole(r);
     try {
-      const { data } = await axios.post('http://localhost:5000/api/growth/plan', { targetRole: r }, config);
+      const { data } = await axios.post(`${API_BASE}/api/growth/plan`, { targetRole: r }, config);
       setPlan(data);
       setActiveTab('roadmap');
     } catch (err) {

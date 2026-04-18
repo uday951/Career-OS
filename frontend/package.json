@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "vite --port 3000",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "vite preview --port $PORT --host 0.0.0.0"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.12.1",
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.0",
     "clsx": "^2.1.1",

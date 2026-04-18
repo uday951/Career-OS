@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { GoogleLogin } from '@react-oauth/google';
 import useStore from '../store/useStore';
+import API_BASE from '../config/api';
 import { Mail, Lock, User, ArrowRight, Sparkles, Shield, Zap, Globe } from 'lucide-react';
 
 const FEATURES = [
@@ -16,13 +18,32 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const { setUser } = useStore();
 
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setLoading(true);
+    setError('');
+    try {
+      const { data } = await axios.post(`${API_BASE}/api/auth/google`, {
+        credential: credentialResponse.credential
+      });
+      setUser(data, data.token);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Google authentication failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleError = () => {
+    setError('Google Sign-In was cancelled or failed');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
-      const { data } = await axios.post(`http://localhost:5000${endpoint}`, formData);
+      const { data } = await axios.post(`${API_BASE}${endpoint}`, formData);
       setUser(data, data.token);
     } catch (err) {
       setError(err.response?.data?.message || 'Authentication failed');
@@ -168,6 +189,29 @@ export default function Auth() {
                 }
               </button>
             </form>
+
+            {/* Divider */}
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-white/10"></div>
+              </div>
+              <div className="relative flex justify-center text-xs">
+                <span className="bg-[#0A0E1A] px-3 text-textMuted font-medium">Or continue with</span>
+              </div>
+            </div>
+
+            {/* Google Sign-In */}
+            <div className="flex justify-center">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+                theme="filled_black"
+                size="large"
+                text={isLogin ? 'signin_with' : 'signup_with'}
+                width="100%"
+                logo_alignment="left"
+              />
+            </div>
 
             {/* Switch */}
             <div className="mt-6 text-center">

@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, NavLink, useLocation } from 'react-router-dom';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { LayoutDashboard, FileText, Briefcase, Search, LogOut, ChevronRight, Sparkles, Bot, Shield, Cpu, TrendingUp, BarChart2 } from 'lucide-react';
 import useStore from './store/useStore';
 import Auth from './pages/Auth';
@@ -154,7 +155,17 @@ function AppLayout({ children }) {
 
 function App() {
   const isAuthenticated = useStore(s => s.isAuthenticated);
-  if (!isAuthenticated) return <Auth />;
+  
+  // Get Google Client ID from environment variable
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  
+  if (!isAuthenticated) {
+    return (
+      <GoogleOAuthProvider clientId={googleClientId || ''}>
+        <Auth />
+      </GoogleOAuthProvider>
+    );
+  }
 
   return (
     <Router>

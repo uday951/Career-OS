@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useStore from '../store/useStore';
+import API_BASE from '../config/api';
 import { Link } from 'react-router-dom';
 import { Target, PlusCircle, BrainCircuit, FilePenLine, Loader2, Sparkles, AlertTriangle } from 'lucide-react';
 
@@ -22,7 +23,7 @@ export default function JobTracker() {
 
   const fetchJobs = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/jobs', config);
+      const { data } = await axios.get(`${API_BASE}/api/jobs`, config);
       setJobs(data);
     } catch (err) {
       console.error(err);
@@ -31,7 +32,7 @@ export default function JobTracker() {
 
   const fetchResumes = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/resumes', config);
+      const { data } = await axios.get(`${API_BASE}/api/resumes`, config);
       setResumes(data);
     } catch (err) {
       console.error(err);
@@ -42,7 +43,7 @@ export default function JobTracker() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/jobs', formData, config);
+      await axios.post(`${API_BASE}/api/jobs`, formData, config);
       setShowAdd(false);
       setFormData({ title: '', company: '', url: '', description: '' });
       fetchJobs();
@@ -56,7 +57,7 @@ export default function JobTracker() {
   const handleLinkResume = async (applicationId, resumeId) => {
     if (!resumeId) return;
     try {
-      await axios.put(`http://localhost:5000/api/jobs/${applicationId}/resume`, { resumeId }, config);
+      await axios.put(`${API_BASE}/api/jobs/${applicationId}/resume`, { resumeId }, config);
       fetchJobs();
     } catch (err) {
       console.error(err);
@@ -66,7 +67,7 @@ export default function JobTracker() {
   const triggerMatchAnalysis = async (applicationId) => {
     setAnalyzingId(applicationId);
     try {
-      await axios.post('http://localhost:5000/api/ai/analyze-match', { applicationId }, config);
+      await axios.post(`${API_BASE}/api/ai/analyze-match`, { applicationId }, config);
       fetchJobs();
     } catch (err) {
       alert(err.response?.data?.message || 'Match analysis failed');
@@ -79,7 +80,7 @@ export default function JobTracker() {
   const generateCoverLetter = async (applicationId) => {
     setAnalyzingId(`cl-${applicationId}`);
     try {
-      await axios.post('http://localhost:5000/api/ai/cover-letter', { applicationId }, config);
+      await axios.post(`${API_BASE}/api/ai/cover-letter`, { applicationId }, config);
       fetchJobs();
     } catch (err) {
       alert(err.response?.data?.message || 'Cover Letter generation failed');
