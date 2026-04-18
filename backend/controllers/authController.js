@@ -1,5 +1,8 @@
 import User from '../models/User.js';
 import generateToken from '../utils/generateToken.js';
+import { OAuth2Client } from 'google-auth-library';
+
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // @desc    Register a new user
 // @route   POST /api/auth/register
@@ -83,5 +86,61 @@ export const getUserProfile = async (req, res, next) => {
     }
   } catch (error) {
     next(error);
+  }
+};
+
+// @desc    Google OAuth login/register
+// @route   POST /api/auth/google
+// @access  Public
+export const googleAuth = async (req, res, next) => {
+  try {
+    const { credential } = req.body;
+
+    if (!credential) {
+      res.status(400);
+      throw new Error('Google credential is required');
+    }
+
+    // Verify the Google token
+    const ticket = await googleClient.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    const { email, name, picture, sub: googleId } = payload;
+
+    // Check if user exists
+    let user = await User.findOne({ email });
+
+    if (user) {
+      // User exists, log them in
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        token: generateToken(user._id),
+      });
+    } else {
+      // Create new user with Google data
+      user = await User.create({
+        name,
+        email,
+        password_hash: Math.random().toString(36).slice(-8), // Random password (won't be used)
+        google_id: googleId,
+        profile_picture: picture,
+      });
+
+      res.status(201).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        token: generateToken(user._id),
+      });
+    }
+  } catch (error) {
+    console.error('Google Auth Error:', error);
+    res.status(401);
+    next(new Error('Google authentication failed'));
   }
 };

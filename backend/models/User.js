@@ -15,6 +15,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add a password']
   },
+  google_id: {
+    type: String,
+    unique: true,
+    sparse: true // Allows null values while maintaining uniqueness
+  },
+  profile_picture: {
+    type: String
+  },
   base_profile: {
     work_history: [{
       company: String,
