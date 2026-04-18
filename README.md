@@ -35,63 +35,63 @@ This isn't a CRUD app. It's an **AI operating system for your career**.
 ### 🏠 Career Dashboard
 > Real-time pipeline overview — total applications, average AI match rate, ATS scores, rejection rate, and quick actions. All in one command center.
 
-![Career Dashboard](public/Screenshot%202026-04-18%20124557.png)
+![Career Dashboard](frontend/public/Screenshot%202026-04-18%20124557.png)
 
 ---
 
 ### 📄 AI Resume Hub
 > Upload your PDF resume. AI extracts your full profile — skills, work history, education, and projects — and computes an ATS base score. Auto-generates a LaTeX-formatted Overleaf resume in one click.
 
-![AI Resume Hub](public/Screenshot%202026-04-18%20124606.png)
+![AI Resume Hub](frontend/public/Screenshot%202026-04-18%20124606.png)
 
 ---
 
 ### 🔍 Smart Job Discovery
 > Search live jobs from 50+ portals (LinkedIn, Indeed, Glassdoor) via JSearch. Filter by job type (Full Time, Part Time, Contract, Internship), location, and remote preference. Save and generate tailored materials in one click.
 
-![Smart Job Discovery](public/Screenshot%202026-04-18%20124632.png)
+![Smart Job Discovery](frontend/public/Screenshot%202026-04-18%20124632.png)
 
 ---
 
 ### 🎯 Job Pipeline & AI Tailoring
 > Add jobs to your pipeline. Get an AI match percentage against your resume, see missing skills, generate a tailored cover letter, and enter the Application Hub for deep research, interview prep, and company intelligence.
 
-![Job Pipeline](public/Screenshot%202026-04-18%20124647.png)
+![Job Pipeline](frontend/public/Screenshot%202026-04-18%20124647.png)
 
 ---
 
 ### 🤖 AI Career Coach
 > A context-aware chat interface powered by Gemini 2.0 Flash. Reads your parsed resume, your pipeline, your ATS score, and your match rate before answering. Gives hyper-personalized advice — no generic tips.
 
-![AI Coach](public/Screenshot%202026-04-18%20124656.png)
+![AI Coach](frontend/public/Screenshot%202026-04-18%20124656.png)
 
 ---
 
 ### 🛡️ Shadow Application Mode
 > Before you apply, simulate the hiring outcome. Paste a job description and get: selection probability, rejection probability, top 3 rejection risks with severity ratings, keyword gap analysis, ATS-optimized headline, and 4 improvement actions with effort levels and impact estimates.
 
-![Shadow Mode](public/Screenshot%202026-04-18%20124707.png)
+![Shadow Mode](frontend/public/Screenshot%202026-04-18%20124707.png)
 
 ---
 
 ### 🔄 Reverse Recruiter Mode
 > Flip the system. Instead of you applying to jobs, AI scans live job listings and finds which companies should be hiring *you*. Ranked by fit score, with per-job strategy, competitive edge, outreach subject line, and direct apply link. Filter by location, job type, and remote preference.
 
-![Reverse Recruiter](public/Screenshot%202026-04-18%20124717.png)
+![Reverse Recruiter](frontend/public/Screenshot%202026-04-18%20124717.png)
 
 ---
 
 ### 📈 Career Growth Engine
 > Enter a target role (e.g., "Senior AI Engineer" or "Staff Backend Engineer at FAANG"). AI analyzes your resume and generates a phased roadmap: skill gaps ranked by market demand, week-by-week learning plan, portfolio-worthy project ideas with tech stacks, and curated learning resources.
 
-![Growth Engine](public/Screenshot%202026-04-18%20124727.png)
+![Growth Engine](frontend/public/Screenshot%202026-04-18%20124727.png)
 
 ---
 
 ### 📊 Weekly Career Report
 > Every week, the backend aggregates real MongoDB data — application counts, match rate delta, response rate, rejection patterns — then sends verified numbers to AI for narrative analysis. Grade (A–F), momentum indicator, wins, concerns, pattern analysis, and ranked next-week priorities.
 
-![Weekly Report](public/Screenshot%202026-04-18%20124736.png)
+![Weekly Report](frontend/public/Screenshot%202026-04-18%20124736.png)
 
 ---
 
