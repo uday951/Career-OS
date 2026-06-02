@@ -34,9 +34,14 @@ connectDB();
 const app = express();
 const httpServer = createServer(app);
 
-// Initialize Socket.IO
-const io = initializeSocket(httpServer);
-console.log('✅ Socket.IO initialized');
+// Initialize Socket.IO (optional for serverless environments)
+let io = null;
+try {
+  io = initializeSocket(httpServer);
+  console.log('✅ Socket.IO initialized');
+} catch (error) {
+  console.warn('⚠️  Socket.IO initialization failed:', error.message);
+}
 
 // Middleware
 app.use(express.json({ limit: '10mb' }));

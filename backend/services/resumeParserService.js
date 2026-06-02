@@ -1,17 +1,24 @@
-import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
+// Lazy-load pdfjs-dist to avoid issues in serverless environments
+let pdfjsLib = null;
 
-// No worker needed for Node.js legacy build
+async function loadPdfJs() {
+  if (!pdfjsLib) {
+    pdfjsLib = await import('pdfjs-dist/legacy/build/pdf.mjs');
+  }
+  return pdfjsLib;
+}
 
 /**
  * Extract text from a PDF buffer
  */
 export async function extractTextFromPdf(buffer) {
   try {
+    const pdf = await import('pdfjs-dist/legacy/build/pdf.mjs');
     const uint8Array = new Uint8Array(buffer);
-    const pdf = await pdfjsLib.getDocument({ data: uint8Array }).promise;
+    const document = await pdf.getDocument({ data: uint8Array }).promise;
     let text = '';
-    for (let i = 1; i <= pdf.numPages; i++) {
-      const page = await pdf.getPage(i);
+    for (let i = 1; i <= document.numPages; i++) {
+      const page = await document.getPage(i);
       const content = await page.getTextContent();
       text += content.items.map(item => item.str).join(' ') + '\n';
     }
