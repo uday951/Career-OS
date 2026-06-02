@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, NavLink, useLocation } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { LayoutDashboard, FileText, Briefcase, Search, LogOut, ChevronRight, Sparkles, Bot, Shield, Cpu, TrendingUp, BarChart2 } from 'lucide-react';
+import { LayoutDashboard, FileText, Briefcase, Search, LogOut, ChevronRight, Sparkles, Bot, Shield, Cpu, TrendingUp, BarChart2, Zap } from 'lucide-react';
 import useStore from './store/useStore';
 import Auth from './pages/Auth';
 import Resumes from './pages/Resumes';
@@ -13,17 +13,21 @@ import ShadowMode from './pages/ShadowMode';
 import ReverseRecruiter from './pages/ReverseRecruiter';
 import GrowthEngine from './pages/GrowthEngine';
 import WeeklyReport from './pages/WeeklyReport';
+import AutomationDashboard from './pages/AutomationDashboard';
+import AutoApplySettings from './pages/AutoApplySettings';
+import AIAgentDashboard from './pages/AIAgentDashboard';
+import GmailCallback from './pages/GmailCallback';
 
 const NAV = [
-  { to: '/',         icon: LayoutDashboard, label: 'Dashboard',        end: true },
-  { to: '/resumes',  icon: FileText,         label: 'AI Resumes'             },
-  { to: '/discover', icon: Search,           label: 'Smart Discover'         },
-  { to: '/jobs',     icon: Briefcase,        label: 'Job Pipeline'           },
-  { to: '/coach',    icon: Bot,              label: 'AI Coach'               },
-  { to: '/shadow',   icon: Shield,           label: 'Shadow Mode'            },
-  { to: '/reverse',  icon: Cpu,              label: 'Reverse Recruiter'      },
-  { to: '/growth',   icon: TrendingUp,       label: 'Growth Engine'          },
-  { to: '/report',   icon: BarChart2,        label: 'Weekly Report'          },
+  { to: '/',           icon: Zap,              label: 'Auto Apply AI',   end: true },
+  { to: '/resumes',    icon: FileText,         label: 'AI Resumes'                 },
+  { to: '/discover',   icon: Search,           label: 'Smart Discover'             },
+  { to: '/jobs',       icon: Briefcase,        label: 'Job Pipeline'               },
+  { to: '/coach',      icon: Bot,              label: 'AI Coach'                   },
+  { to: '/shadow',     icon: Shield,           label: 'Shadow Mode'                },
+  { to: '/reverse',    icon: Cpu,              label: 'Reverse Recruiter'          },
+  { to: '/growth',     icon: TrendingUp,       label: 'Growth Engine'              },
+  { to: '/report',     icon: BarChart2,        label: 'Weekly Report'              },
 ];
 
 function Sidebar() {
@@ -31,24 +35,24 @@ function Sidebar() {
   const user   = useStore(s => s.user);
 
   return (
-    <aside className="hidden md:flex flex-col w-[240px] shrink-0 h-screen sticky top-0 border-r border-white/[0.06] bg-[#060810]/90 backdrop-blur-xl z-30">
+    <aside className="hidden md:flex flex-col w-[240px] shrink-0 h-screen sticky top-0 border-r border-blue-200 bg-white z-30">
       
       {/* Logo */}
-      <div className="px-5 pt-6 pb-5 border-b border-white/[0.06]">
+      <div className="px-5 pt-6 pb-5 border-b border-blue-200">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary via-violet-500 to-accent flex items-center justify-center shadow-glow-violet shrink-0">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary via-blue-600 to-accent flex items-center justify-center shadow-glow-violet shrink-0">
             <Sparkles size={18} className="text-white" />
           </div>
           <div>
             <span className="font-bold text-sm text-textMain block leading-tight">Career OS</span>
-            <span className="text-2xs text-textMuted font-medium">AI Platform</span>
+            <span className="text-2xs text-primary font-medium">AI Platform</span>
           </div>
         </div>
       </div>
 
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto no-scrollbar">
-        <p className="text-2xs font-bold text-textDim uppercase tracking-widest px-3 mb-3">Workspace</p>
+        <p className="text-2xs font-bold text-primary uppercase tracking-widest px-3 mb-3">Workspace</p>
         {NAV.map(({ to, icon: Icon, label, end }) => (
           <NavLink
             key={to}
@@ -69,22 +73,28 @@ function Sidebar() {
         ))}
       </nav>
 
+      {/* Commercial membership indicator */}
+      <div className="mx-3 my-2 p-3 bg-primaryLight border border-primary/30 rounded-xl text-center shadow-sm">
+        <span className="text-[10px] font-extrabold uppercase tracking-widest text-primary block">PRO MEMBERSHIP</span>
+        <span className="text-xs font-bold text-textOrange block mt-0.5">Enterprise Crawler active</span>
+      </div>
+
       {/* Bottom — User info + logout */}
-      <div className="px-3 py-4 border-t border-white/[0.06] space-y-2">
+      <div className="px-3 py-4 border-t border-slate-100 space-y-2">
         {user && (
-          <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+          <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-100">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-xs font-bold shrink-0">
               {user.name?.[0]?.toUpperCase() || 'U'}
             </div>
             <div className="min-w-0">
-              <p className="text-xs font-semibold text-textMain truncate leading-tight">{user.name || 'User'}</p>
-              <p className="text-2xs text-textMuted truncate">{user.email}</p>
+              <p className="text-xs font-semibold text-slate-800 truncate leading-tight">{user.name || 'User'}</p>
+              <p className="text-2xs text-slate-500 truncate">{user.email}</p>
             </div>
           </div>
         )}
         <button
           onClick={logout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-textMuted hover:text-danger hover:bg-danger/5 transition-all duration-200"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-slate-500 hover:text-danger hover:bg-danger/5 transition-all duration-200"
         >
           <LogOut size={16} />
           <span className="font-medium">Sign out</span>
@@ -192,6 +202,8 @@ function App() {
           <Route path="/reverse"        element={<ReverseRecruiter />} />
           <Route path="/growth"         element={<GrowthEngine />} />
           <Route path="/report"         element={<WeeklyReport />} />
+          <Route path="/settings"       element={<AutoApplySettings />} />
+          <Route path="/gmail-callback" element={<GmailCallback />} />
           <Route path="/application/:id" element={<ApplicationHub />} />
         </Routes>
       </AppLayout>
