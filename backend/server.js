@@ -1,10 +1,13 @@
 import express from 'express';
 import dotenv from 'dotenv';
+dotenv.config();
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import { createServer } from 'http';
 import connectDB from './config/db.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+import { initializeSocket } from './config/socket.js';
 
 import authRoutes from './routes/authRoutes.js';
 import resumeRoutes from './routes/resumeRoutes.js';
@@ -15,20 +18,32 @@ import shadowRoutes from './routes/shadowRoutes.js';
 import reverseRoutes from './routes/reverseRoutes.js';
 import growthRoutes from './routes/growthRoutes.js';
 import reportRoutes from './routes/reportRoutes.js';
+import automationRoutes from './routes/automationRoutes.js';
+import agentRoutes from './routes/agentRoutes.js';
+import outreachRoutes from './routes/outreachRoutes.js';
 
-dotenv.config();
+// Import workers
+import './workers/searchWorker.js';
+import './workers/matchWorker.js';
+import './workers/applyWorker.js';
+import './workers/emailWorker.js';
 
 // Connect to Database
 connectDB();
 
 const app = express();
+const httpServer = createServer(app);
+
+// Initialize Socket.IO
+const io = initializeSocket(httpServer);
+console.log('✅ Socket.IO initialized');
 
 // Middleware
 app.use(express.json({ limit: '10mb' }));
 
 // CORS — allow frontend origin (set FRONTEND_URL in Render env vars)
 const allowedOrigins = process.env.FRONTEND_URL
-  ? [process.env.FRONTEND_URL, 'http://localhost:5173']
+  ? [process.env.FRONTEND_URL, 'http://localhost:5173', 'http://localhost:3000']
   : '*';
 
 app.use(cors({
@@ -49,8 +64,16 @@ app.use('/api/shadow', shadowRoutes);
 app.use('/api/reverse', reverseRoutes);
 app.use('/api/growth', growthRoutes);
 app.use('/api/report', reportRoutes);
+app.use('/api/automation', automationRoutes);
+app.use('/api/agent', agentRoutes);
+app.use('/api/outreach', outreachRoutes);
 
 app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', message: 'Career OS AI API is running' });
+});
+
+// Root route - API status
+app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'Career OS AI API is running' });
 });
 
@@ -60,8 +83,10 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+  console.log('✅ BullMQ workers initialized');
+  console.log('✅ AI Agent system ready');
 
   // ── Self-Ping (Render Free Tier Keep-Alive) ─────────────────────────────
   // Render free tier sleeps after 15 min of inactivity.
