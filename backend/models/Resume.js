@@ -29,6 +29,12 @@ const resumeSchema = new mongoose.Schema({
   is_base_resume: {
     type: Boolean,
     default: false
+  },
+  file_data: {
+    type: Buffer
+  },
+  file_name: {
+    type: String
   }
 }, {
   timestamps: true

@@ -23,6 +23,12 @@ const userSchema = new mongoose.Schema({
   profile_picture: {
     type: String
   },
+  gmail_refresh_token: {
+    type: String
+  },
+  gmail_access_token: {
+    type: String
+  },
   base_profile: {
     work_history: [{
       company: String,

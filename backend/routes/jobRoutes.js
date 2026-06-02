@@ -1,5 +1,5 @@
 import express from 'express';
-import { createJob, getMyJobs, updateJobStatus, linkResume, autoApplyJob, getApplicationByJob } from '../controllers/jobController.js';
+import { createJob, getMyJobs, updateJobStatus, linkResume, autoApplyJob, getApplicationByJob, getApplicationReport } from '../controllers/jobController.js';
 import { updateApplicationStatus } from '../controllers/growthController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
@@ -10,6 +10,7 @@ router.route('/auto-apply').post(protect, autoApplyJob);
 router.route('/:id/status').put(protect, updateJobStatus);
 router.route('/:id/resume').put(protect, linkResume);
 router.route('/application/:jobId').get(protect, getApplicationByJob);
+router.route('/application/:jobId/report').get(protect, getApplicationReport);
 
 // PATCH /api/jobs/application/:id/status — manual status update with notes
 router.patch('/application/:id/status', protect, updateApplicationStatus);

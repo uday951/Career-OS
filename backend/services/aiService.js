@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-// Using a fast, free model on OpenRouter for text analysis
-const MODEL = 'google/gemini-2.0-flash-001';
+const DEEPSEEK_API_URL = 'https://api.deepseek.com/chat/completions';
+// Using DeepSeek chat model
+const MODEL = 'deepseek-chat';
 
 /**
  * Base AI wrapper function
@@ -19,12 +19,10 @@ export const askAI = async (systemPrompt, userPrompt, jsonMode = true) => {
       response_format: jsonMode ? { type: 'json_object' } : undefined,
     };
 
-    const response = await fetch(OPENROUTER_API_URL, {
+    const response = await fetch(DEEPSEEK_API_URL, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        'HTTP-Referer': 'http://localhost:5000', // OpenRouter requires this
-        'X-Title': 'Career OS AI',
+        'Authorization': `Bearer ${process.env.DEEPSEEK_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(payload)
@@ -32,7 +30,7 @@ export const askAI = async (systemPrompt, userPrompt, jsonMode = true) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('OpenRouter Error:', errorText);
+      console.error('DeepSeek Error:', errorText);
       throw new Error(`AI Request failed with status ${response.status}`);
     }
 
@@ -173,6 +171,50 @@ export const searchTargetJobs = async (resumeJson, queryOverride = null) => {
 
 export const generateCompanyIntel = async (companyName, roleTitle) => {
   return await generateDeepseekIntel(companyName, roleTitle);
+};
+
+/**
+ * AI Agent Decision Making - Determines if job should be applied to
+ */
+export const shouldApplyToJob = async (resumeJson, jobData, userPreferences) => {
+  const systemPrompt = `You are an autonomous AI job agent. Analyze if this job matches the candidate's profile and preferences.
+  Consider: skills match, experience level, salary expectations, location preferences, company reputation.
+  Return JSON:
+  {
+    "should_apply": boolean,
+    "confidence_score": number (0-100),
+    "reasoning": "string",
+    "red_flags": ["string"],
+    "green_flags": ["string"]
+  }`;
+
+  const userPrompt = `RESUME: ${JSON.stringify(resumeJson)}\n\nJOB: ${JSON.stringify(jobData)}\n\nPREFERENCES: ${JSON.stringify(userPreferences)}\n\nDecide.`;
+  
+  return await askAI(systemPrompt, userPrompt, true);
+};
+
+/**
+ * Generate personalized recruiter email
+ */
+export const generateRecruiterEmail = async (resumeJson, jobData, emailType = 'application_followup') => {
+  const systemPrompt = `You are an expert career coach writing professional recruiter emails.
+  Write a personalized, concise email (3-4 sentences max) that sounds human and genuine.
+  Return JSON:
+  {
+    "subject": "string",
+    "body": "string (plain text, professional tone)"
+  }`;
+
+  const userPrompt = `EMAIL TYPE: ${emailType}\nCANDIDATE: ${JSON.stringify(resumeJson)}\nJOB: ${JSON.stringify(jobData)}\n\nGenerate email.`;
+  
+  return await askAI(systemPrompt, userPrompt, true);
+};
+
+/**
+ * AI-powered form field understanding
+ */
+export const callDeepSeek = async (prompt) => {
+  return await askAI('You are a helpful AI assistant analyzing web pages and forms.', prompt, false);
 };
 
 /**

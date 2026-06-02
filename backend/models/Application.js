@@ -17,8 +17,14 @@ const applicationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['SAVED', 'APPLYING', 'APPLIED', 'INTERVIEWING', 'REJECTED', 'OFFERED'],
+    enum: ['SAVED', 'PENDING_REVIEW', 'APPLYING', 'APPLIED', 'FAILED', 'INTERVIEWING', 'REJECTED', 'OFFERED'],
     default: 'SAVED'
+  },
+  match_score: {
+    type: Number
+  },
+  error_message: {
+    type: String
   },
   match_analysis: {
     match_percentage: Number,
@@ -39,6 +45,20 @@ const applicationSchema = new mongoose.Schema({
   },
   applied_on: {
     type: Date
+  },
+  screenshot_url: {
+    type: String  // Post-submission screenshot
+  },
+  filled_form_screenshot_url: {
+    type: String  // Screenshot of the filled form before submission
+  },
+  form_submission_data: [{
+    field_label: { type: String },
+    field_type: { type: String },
+    value: { type: String }
+  }],
+  application_url: {
+    type: String  // The direct URL where the job can be applied
   },
   intelligence_materials: {
     company_background: String,

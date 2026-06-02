@@ -163,6 +163,43 @@ export const autoApplyJob = async (req, res, next) => {
 
 export const getApplicationByJob = async (req, res, next) => {
   try {
+    const query = {
+      user_id: req.user._id,
+      $or: [
+        { _id: req.params.jobId },
+        { job_id: req.params.jobId }
+      ]
+    };
+
+    const application = await Application.findOne(query)
+      .populate('job_id')
+      .populate('resume_id');
+
+    if (!application) {
+      res.status(404);
+      throw new Error("Application not found.");
+    }
+
+    const { default: EmailTracking } = await import('../models/EmailTracking.js');
+    const emailTracking = await EmailTracking.findOne({
+      user_id: req.user._id,
+      application_id: application._id
+    });
+
+    res.json({
+      ...application.toJSON(),
+      email_tracking: emailTracking || null
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get per-application submission report with form data and screenshot
+// @route   GET /api/jobs/application/:jobId/report
+// @access  Private
+export const getApplicationReport = async (req, res, next) => {
+  try {
     const application = await Application.findOne({
       user_id: req.user._id,
       job_id: req.params.jobId
@@ -172,7 +209,31 @@ export const getApplicationByJob = async (req, res, next) => {
       res.status(404);
       throw new Error("Application not found.");
     }
-    res.json(application);
+
+    const job = application.job_id;
+
+    const report = {
+      application_id: application._id,
+      job_title: job.title,
+      company: job.company,
+      location: job.location || 'Remote',
+      job_url: job.job_url || job.url,
+      status: application.status,
+      applied_on: application.applied_on,
+      method: application.screenshot_url ? 'Browser Automation' : 'ATS API',
+      // Form submission data (what fields were filled)
+      form_fields_filled: application.form_submission_data || [],
+      // Screenshots
+      filled_form_screenshot_url: application.filled_form_screenshot_url,
+      post_submission_screenshot_url: application.screenshot_url,
+      // Match & letter data
+      match_score: application.match_score,
+      match_analysis: application.match_analysis,
+      tailored_cover_letter: application.tailored_cover_letter,
+      error_message: application.error_message
+    };
+
+    res.json(report);
   } catch (error) {
     next(error);
   }

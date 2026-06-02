@@ -1,7 +1,6 @@
 import Resume from '../models/Resume.js';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const pdfParse = require('pdf-parse');
+import AutomationSettings from '../models/AutomationSettings.js';
+import { extractTextFromPdf } from '../services/resumeParserService.js';
 
 // @desc    Upload new resume and basic parse
 // @route   POST /api/resumes/upload
@@ -13,8 +12,7 @@ export const uploadResume = async (req, res, next) => {
     
     // Parse PDF if uploaded
     if (req.file) {
-      const pdfData = await pdfParse(req.file.buffer);
-      original_text = pdfData.text;
+      original_text = await extractTextFromPdf(req.file.buffer);
     }
 
     if (!original_text || original_text.trim() === '') {
@@ -42,6 +40,31 @@ export const getMyResumes = async (req, res, next) => {
   try {
     const resumes = await Resume.find({ user_id: req.user._id }).sort({ createdAt: -1 });
     res.json(resumes);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Delete user resume
+// @route   DELETE /api/resumes/:id
+// @access  Private
+export const deleteResume = async (req, res, next) => {
+  try {
+    const resume = await Resume.findOne({ _id: req.params.id, user_id: req.user._id });
+    if (!resume) {
+      res.status(404);
+      throw new Error("Resume not found");
+    }
+    
+    await resume.deleteOne();
+    
+    // Clean up active resume selection in automation settings
+    await AutomationSettings.updateOne(
+      { user_id: req.user._id, resume_id: req.params.id },
+      { $unset: { resume_id: "" } }
+    );
+    
+    res.json({ message: 'Resume removed successfully' });
   } catch (error) {
     next(error);
   }
