@@ -57,18 +57,94 @@ export const askAI = async (systemPrompt, userPrompt, jsonMode = true) => {
  * Parses raw text into structured JSON representing a candidate's profile
  */
 export const parseResumeText = async (rawText) => {
-  const systemPrompt = `You are a strict ATS parsing engine. Extract the resume information into a predefined JSON schema perfectly. Do not include any conversational text.
-  JSON Schema exactly like this:
-  {
-    "work_history": [{"company":"", "title":"", "start_date":"", "end_date":"", "description":""}],
-    "education": [{"institution":"", "degree":"", "field_of_study":"", "start_date":"", "graduation_date":""}],
-    "master_skills": ["skill1", "skill2"],
-    "summary": "Professional summary"
-  }`;
+  const systemPrompt = `You are an elite, highly precise ATS parsing engine. 
+Your job is to extract EVERYTHING from the provided raw resume text into the requested JSON schema structure.
+Do NOT omit, summarize, aggregate, or skip any job experiences, projects, bullet points, education items, or skills.
+You MUST preserve all details exactly as they are in the text.
+If any contact field is not found, leave it empty.
 
-  const userPrompt = `Parse the following raw text into the requested JSON schema:\n\n${rawText}`;
+JSON Schema:
+{
+  "fullName": "Full Name",
+  "title": "Role Title / Professional Headline",
+  "email": "Email Address",
+  "phone": "Phone Number",
+  "location": "City, State / Location",
+  "linkedin": "LinkedIn profile link",
+  "github": "GitHub profile link",
+  "summary": "Professional summary hook",
+  "experience": [
+    {
+      "position": "Job title / Position",
+      "company": "Company Name",
+      "startDate": "Start date",
+      "endDate": "End date or 'Present'",
+      "description": "Factual description/bullet points of achievements, duties, and tools used. Keep them separated by newlines."
+    }
+  ],
+  "projects": [
+    {
+      "name": "Project Name",
+      "description": "Factual description/bullet points of project goals, achievements, and scope, separated by newlines.",
+      "technologies": ["React", "TypeScript", "Node.js"],
+      "link": "Optional project URL/link"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Skill category (e.g. Languages, Frontend, Backend, DevOps, Tools, Methodologies)",
+      "items": ["Skill 1", "Skill 2"]
+    }
+  ],
+  "education": [
+    {
+      "school": "University/School name",
+      "degree": "Degree and Major (e.g. B.S. in Computer Science)",
+      "graduationDate": "Graduation Date or Year"
+    }
+  ],
+  "certifications": ["Certification name 1", "Certification name 2"]
+}
+
+Return ONLY the raw JSON object. Do not wrap in markdown code blocks.`;
+
+  const userPrompt = `Extract all details from the following raw resume text into the predefined JSON schema:\n\n${rawText}`;
   
-  return await askAI(systemPrompt, userPrompt, true);
+  const parsed = await askAI(systemPrompt, userPrompt, true);
+  
+  // Backward compatibility mapping
+  if (parsed) {
+    if (!parsed.work_history && parsed.experience) {
+      parsed.work_history = parsed.experience.map(exp => ({
+        company: exp.company || '',
+        title: exp.position || '',
+        start_date: exp.startDate || '',
+        end_date: exp.endDate || '',
+        description: exp.description || ''
+      }));
+    }
+    if (!parsed.master_skills && parsed.skills) {
+      const allSkills = [];
+      parsed.skills.forEach(cat => {
+        if (Array.isArray(cat.items)) {
+          allSkills.push(...cat.items);
+        } else if (typeof cat.items === 'string') {
+          allSkills.push(cat.items);
+        }
+      });
+      parsed.master_skills = [...new Set(allSkills)];
+    }
+    if (!parsed.education_old && parsed.education) {
+      parsed.education_old = parsed.education.map(edu => ({
+        institution: edu.school || '',
+        degree: edu.degree || '',
+        field_of_study: '',
+        start_date: '',
+        graduation_date: edu.graduationDate || ''
+      }));
+    }
+  }
+  return parsed;
 };
 
 /**

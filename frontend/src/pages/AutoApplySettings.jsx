@@ -254,117 +254,155 @@ export default function AutoApplySettings() {
 
   if (loading) {
     return (
-      <div className="p-8 max-w-3xl mx-auto flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="animate-spin text-primary" size={32} />
+      <div className="p-8 max-w-3xl mx-auto flex items-center justify-center min-h-[60vh] text-textMain">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="animate-spin text-primary" size={36} />
+          <p className="text-xs text-textMuted font-medium">Synchronizing configurations...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="p-6 lg:p-8 max-w-3xl mx-auto space-y-8 animate-fade-in pb-24">
+    <div className="p-6 lg:p-8 max-w-4xl mx-auto space-y-6 animate-fade-in pb-24 text-textMain">
       
       {/* Top Banner Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold flex items-center gap-3 text-slate-900">
-            <Settings className="text-primary" size={28} />
-            Automation Settings
+      <div className="relative overflow-hidden bg-gradient-to-r from-surface to-[#0a0d18] border border-white/[0.05] p-6 md:p-8 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-2xl">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[80px] pointer-events-none rounded-full" />
+        <div className="space-y-2 relative z-10">
+          <p className="text-2xs font-extrabold tracking-widest text-primary uppercase">SYSTEM PARAMETERS</p>
+          <h1 className="text-3xl font-black tracking-tight leading-none bg-clip-text text-transparent bg-gradient-to-r from-textMain via-slate-100 to-textMuted">
+            Autopilot Settings
           </h1>
-          <p className="text-slate-500 mt-1">Configure your AI resume selection, thresholds, schedule, and subscription billing.</p>
+          <p className="text-xs text-textMuted max-w-xl">
+            Configure active profiles, search parameters, scheduler limits, and channel outreach triggers.
+          </p>
         </div>
-        <button onClick={handleSave} disabled={saving} className="btn-primary gap-2 text-xs !py-3">
-          {saving ? <Loader2 className="animate-spin" size={16} /> : <Save size={16} />}
-          Save & Return
-        </button>
+        <div className="flex items-center gap-3 shrink-0 relative z-10">
+          <button 
+            onClick={() => navigate('/')}
+            className="btn-secondary text-xs !py-3 !px-5"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="btn-primary text-xs !py-3 !px-5 shadow-[0_0_15px_rgba(124,58,237,0.3)]"
+          >
+            {saving ? <Loader2 className="animate-spin" size={15} /> : <Save size={15} />}
+            <span>Save & Apply</span>
+          </button>
+        </div>
       </div>
 
       {error && (
-        <div className="bg-danger/10 border border-danger/30 rounded-xl p-4 flex items-start gap-3 animate-fade-in">
+        <div className="bg-danger/10 border border-danger/25 rounded-2xl p-4 flex items-start gap-3 animate-fade-in">
           <AlertCircle size={18} className="text-danger shrink-0 mt-0.5" />
-          <p className="text-sm font-semibold text-danger">{error}</p>
+          <div className="space-y-1">
+            <h5 className="text-xs font-bold text-danger">Configuration Error</h5>
+            <p className="text-2xs text-danger/80">{error}</p>
+          </div>
         </div>
       )}
 
       {success && (
-        <div className="bg-success/10 border border-success/30 rounded-xl p-4 flex items-start gap-3 animate-fade-in">
+        <div className="bg-success/10 border border-success/25 rounded-2xl p-4 flex items-start gap-3 animate-fade-in">
           <CheckCircle2 size={18} className="text-success shrink-0 mt-0.5" />
-          <p className="text-sm font-semibold text-success">{success}</p>
+          <div className="space-y-1">
+            <h5 className="text-xs font-bold text-success">Update Successful</h5>
+            <p className="text-2xs text-success/80">{success}</p>
+          </div>
         </div>
       )}
 
-      {/* Coming Soon Announcement */}
-      <div className="bg-gradient-to-r from-primary/10 to-accent/10 border-2 border-accent rounded-2xl p-6 flex items-start gap-4 animate-fade-in">
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shrink-0 shadow-glow-violet">
-          <Sparkles size={24} className="text-white" />
+      {/* Feature Notification Announcement */}
+      <div className="bg-gradient-to-r from-primary/10 to-accent/10 border border-white/[0.05] rounded-2xl p-6 flex items-start gap-4 shadow-xl">
+        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(124,58,237,0.3)]">
+          <Sparkles size={22} className="text-white" />
         </div>
         <div className="flex-1">
-          <h3 className="text-base font-bold text-textMain">🚀 Auto-Apply AI Features Coming Soon</h3>
-          <p className="text-sm text-textMuted mt-1">
-            This powerful AI-driven automation feature is under active development. We're working hard to bring you:
+          <h3 className="text-sm font-bold text-textMain">🚀 Auto-Apply AI Autopilot Status</h3>
+          <p className="text-xs text-textMuted mt-1 leading-relaxed">
+            The crawler executes background search queries and matches resume keywords using deep semantic matching. Ensure your active profile is fully completed for maximum match rates.
           </p>
-          <ul className="text-xs text-textMuted mt-3 space-y-1 ml-4">
-            <li>✓ Intelligent job matching and application automation</li>
-            <li>✓ Recruiter outreach campaigns via Gmail</li>
-            <li>✓ Smart resume selection based on job requirements</li>
-            <li>✓ Real-time notifications and analytics</li>
-          </ul>
-          <p className="text-xs font-semibold text-primary mt-3">Stay tuned for the official launch! 🎉</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+            <div className="bg-white/[0.02] border border-white/[0.04] p-2.5 rounded-xl text-center">
+              <span className="text-[10px] text-textDim block">Tailoring Model</span>
+              <span className="text-2xs font-bold text-primary mt-0.5 block">DeepSeek-v3</span>
+            </div>
+            <div className="bg-white/[0.02] border border-white/[0.04] p-2.5 rounded-xl text-center">
+              <span className="text-[10px] text-textDim block">Crawl Portals</span>
+              <span className="text-2xs font-bold text-accent mt-0.5 block">LinkedIn & Indeed</span>
+            </div>
+            <div className="bg-white/[0.02] border border-white/[0.04] p-2.5 rounded-xl text-center">
+              <span className="text-[10px] text-textDim block">Daily Quota</span>
+              <span className="text-2xs font-bold text-success mt-0.5 block">Uncapped</span>
+            </div>
+            <div className="bg-white/[0.02] border border-white/[0.04] p-2.5 rounded-xl text-center">
+              <span className="text-[10px] text-textDim block">Agent Scheduler</span>
+              <span className="text-2xs font-bold text-warning mt-0.5 block">Active</span>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* 1. Master toggle */}
-      <section className="glass-elevated rounded-2xl p-6">
+      <section className="glass-card p-6 rounded-2xl relative overflow-hidden">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shadow-inner">
               <Target size={18} />
             </div>
             <div>
-              <h2 className="text-base font-bold text-slate-800">Master Toggle</h2>
-              <p className="text-xs text-slate-500">Globally enable or disable all automated crawl routines</p>
+              <h2 className="text-base font-bold text-textMain">Agent Scheduler Autopilot</h2>
+              <p className="text-xs text-textMuted">Enable or disable background crawl schedules globally</p>
             </div>
           </div>
-          <button
-            onClick={() => setSettings(prev => ({ ...prev, enabled: !prev.enabled }))}
-            className={`relative w-14 h-7 rounded-full transition-all ${settings.enabled ? 'bg-success' : 'bg-slate-200'}`}
-          >
-            <div className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow-md transition-all ${settings.enabled ? 'left-[30px]' : 'left-0.5'}`} />
-          </button>
+          <label className="relative flex items-center cursor-pointer">
+            <input 
+              type="checkbox" 
+              checked={settings.enabled} 
+              onChange={() => setSettings(prev => ({ ...prev, enabled: !prev.enabled }))}
+              className="toggle-checkbox" 
+            />
+            <span className="toggle-slider"></span>
+          </label>
         </div>
       </section>
 
       {/* Gmail Outreach connection card */}
-      <section className="glass-elevated rounded-2xl p-6 space-y-4">
-        <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
-          <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+      <section className="glass-card p-6 rounded-2xl space-y-4">
+        <div className="flex items-center gap-3 border-b border-white/[0.05] pb-4">
+          <div className="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
             <Mail size={18} />
           </div>
           <div>
-            <h2 className="text-base font-bold text-slate-800">Gmail Outreach Channel</h2>
-            <p className="text-xs text-slate-500">Link your Gmail account to enable automated recruiter email campaigns and track open rates/replies</p>
+            <h2 className="text-base font-bold text-textMain">Gmail Outreach Integration</h2>
+            <p className="text-xs text-textMuted">Link your Gmail account to dispatch automated recruiter outreach emails</p>
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-slate-200 bg-slate-50/50">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-white/[0.05] bg-white/[0.01]">
           <div className="flex items-center gap-3">
-            <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${gmailConnected ? 'bg-success/10 text-success' : 'bg-slate-100 text-slate-400'}`}>
+            <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${gmailConnected ? 'bg-success/10 text-success' : 'bg-white/[0.04] text-textDim'}`}>
               <Mail size={18} />
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <p className="text-xs font-bold text-slate-800">
-                  {gmailConnected ? 'Gmail Channel Linked' : 'Gmail Channel Disconnected'}
+                <p className="text-xs font-bold text-textMain">
+                  {gmailConnected ? 'Gmail Channel Active' : 'Gmail Channel Disconnected'}
                 </p>
                 <span className={`text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase tracking-wider ${
-                  gmailConnected ? 'bg-success/20 text-success' : 'bg-slate-200 text-slate-600'
+                  gmailConnected ? 'bg-success/20 text-success border border-success/10' : 'bg-white/[0.08] text-textMuted border border-white/[0.05]'
                 }`}>
-                  {gmailConnected ? 'Active' : 'Offline'}
+                  {gmailConnected ? 'Linked' : 'Offline'}
                 </span>
               </div>
-              <p className="text-[10px] text-slate-500 mt-0.5">
+              <p className="text-[10px] text-textMuted mt-0.5">
                 {gmailConnected 
-                  ? 'All matching applications will automatically trigger outreach emails.' 
-                  : 'Outreach emails cannot be sent. Autopilot is paused.'}
+                  ? 'Recruiter templates will automatically dispatch from your personal address.' 
+                  : 'Outreach emails will remain as drafts. Connect Gmail to enable dispatch.'}
               </p>
             </div>
           </div>
@@ -373,10 +411,10 @@ export default function AutoApplySettings() {
             type="button"
             disabled={gmailLoading}
             onClick={gmailConnected ? handleDisconnectGmail : handleConnectGmail}
-            className={`px-3.5 py-2 text-2xs font-semibold rounded-lg transition-all flex items-center gap-1.5 shadow-sm shrink-0 ${
+            className={`px-4 py-2 text-2xs font-semibold rounded-lg transition-all flex items-center gap-1.5 shadow-sm shrink-0 select-none ${
               gmailConnected 
-                ? 'bg-white border border-slate-200 text-danger hover:bg-red-50 hover:border-red-200' 
-                : 'bg-primary text-white hover:bg-primaryHover'
+                ? 'bg-danger/10 border border-danger/25 text-danger hover:bg-danger/20' 
+                : 'bg-primary text-white hover:brightness-110 shadow-[0_4px_12px_rgba(124,58,237,0.2)]'
             }`}
           >
             {gmailLoading ? (
@@ -384,29 +422,29 @@ export default function AutoApplySettings() {
             ) : gmailConnected ? (
               'Disconnect'
             ) : (
-              'Connect Gmail Account'
+              'Connect Account'
             )}
           </button>
         </div>
       </section>
 
       {/* 2. Premium Resume Selector & Manager */}
-      <section className="glass-elevated rounded-2xl p-6 space-y-6">
-        <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
-          <div className="w-10 h-10 rounded-xl bg-info/10 text-info flex items-center justify-center">
+      <section className="glass-card p-6 rounded-2xl space-y-6">
+        <div className="flex items-center gap-3 border-b border-white/[0.05] pb-4">
+          <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
             <FileText size={18} />
           </div>
           <div>
-            <h2 className="text-base font-bold text-slate-800">AI Resume Manager</h2>
-            <p className="text-xs text-slate-500">Add, delete, or choose which profile version represents you in job submits</p>
+            <h2 className="text-base font-bold text-textMain">Resume Profiles</h2>
+            <p className="text-xs text-textMuted">Select the active profile used for screening and tailor-made templates</p>
           </div>
         </div>
 
         {/* Existing Resumes List */}
         <div className="space-y-3">
           {resumes.length === 0 ? (
-            <div className="text-center py-6 text-xs text-slate-400 bg-slate-50 rounded-xl border border-slate-150">
-              No resumes uploaded yet. Drag & Drop a PDF below to compile.
+            <div className="text-center py-8 text-xs text-textMuted bg-white/[0.01] rounded-xl border border-white/[0.04]">
+              No resume profiles compiled. Upload a PDF below to index credentials.
             </div>
           ) : (
             resumes.map(r => {
@@ -416,22 +454,22 @@ export default function AutoApplySettings() {
                   key={r._id} 
                   className={`flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-xl border transition-all duration-200 ${
                     isActive 
-                      ? 'bg-primary/5 border-primary/40 shadow-sm ring-1 ring-primary/10' 
-                      : 'bg-white border-slate-200 hover:border-slate-350 hover:bg-slate-50/50'
+                      ? 'bg-primary/5 border-primary/40 shadow-[0_0_15px_rgba(124,58,237,0.08)] ring-1 ring-primary/20' 
+                      : 'bg-white/[0.01] border-white/[0.05] hover:border-white/[0.12] hover:bg-white/[0.02]'
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${isActive ? 'bg-primary/10 text-primary' : 'bg-slate-100 text-slate-500'}`}>
+                    <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${isActive ? 'bg-primary/15 text-primary' : 'bg-white/[0.04] text-textMuted'}`}>
                       <FileText size={18} />
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <p className="text-xs font-bold text-slate-800 truncate">{r.title}</p>
+                        <p className="text-xs font-bold text-textMain truncate">{r.title}</p>
                         {isActive && (
-                          <span className="text-[9px] font-extrabold bg-primary/20 text-primary px-1.5 py-0.5 rounded uppercase tracking-wider">Active</span>
+                          <span className="text-[9px] font-extrabold bg-primary/20 text-primary border border-primary/10 px-1.5 py-0.5 rounded uppercase tracking-wider animate-pulse">Active</span>
                         )}
                       </div>
-                      <p className="text-[10px] text-slate-500 mt-0.5">Uploaded {new Date(r.createdAt).toLocaleDateString()} &bull; Score: {r.ats_score || '--'}/100</p>
+                      <p className="text-[10px] text-textMuted mt-0.5">Uploaded {new Date(r.createdAt).toLocaleDateString()} &bull; ATS Score: {r.ats_score || '--'}/100</p>
                     </div>
                   </div>
                   
@@ -440,15 +478,15 @@ export default function AutoApplySettings() {
                       <button
                         type="button"
                         onClick={() => selectActiveResume(r._id)}
-                        className="px-2.5 py-1 text-2xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300 rounded-lg transition-all"
+                        className="px-2.5 py-1 text-2xs font-semibold bg-white/[0.04] border border-white/[0.08] text-textMain hover:bg-white/[0.08] hover:border-white/[0.15] rounded-lg transition-all"
                       >
-                        Select Active
+                        Activate Profile
                       </button>
                     )}
                     <button
                       type="button"
                       onClick={() => handleDeleteResume(r._id)}
-                      className="p-1.5 hover:bg-red-50 text-slate-400 hover:text-danger rounded-lg transition-colors shrink-0"
+                      className="p-1.5 hover:bg-danger/10 text-textDim hover:text-danger rounded-lg transition-colors shrink-0"
                       title="Remove resume"
                     >
                       <Trash2 size={14} />
@@ -461,7 +499,7 @@ export default function AutoApplySettings() {
         </div>
 
         {/* Upload Zone */}
-        <div className="border-2 border-dashed border-slate-200 rounded-xl p-6 text-center hover:border-primary/50 transition-colors bg-slate-50/50">
+        <div className="border-2 border-dashed border-white/[0.08] rounded-xl p-6 text-center hover:border-primary/50 transition-colors bg-white/[0.01]">
           <input
             type="file"
             id="resume-upload"
@@ -507,10 +545,10 @@ export default function AutoApplySettings() {
                 <Upload className="text-primary" size={28} />
               )}
               <div>
-                <p className="text-xs font-bold text-slate-700">
-                  {uploadingResume ? 'Extracting Resume Keywords...' : 'Click here to upload new profile'}
+                <p className="text-xs font-bold text-textMain">
+                  {uploadingResume ? 'Extracting Resume Keywords...' : 'Click to upload and parse new resume profile'}
                 </p>
-                <p className="text-[10px] text-slate-500 mt-0.5">PDF format only. Uploading immediately sets the resume as active selection.</p>
+                <p className="text-[10px] text-textMuted mt-0.5">PDF format only. Active status compiles credentials automatically.</p>
               </div>
             </div>
           </label>
@@ -518,27 +556,28 @@ export default function AutoApplySettings() {
       </section>
 
       {/* 3. Job preferences */}
-      <section className="glass-elevated rounded-2xl p-6 space-y-6">
-        <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
+      <section className="glass-card p-6 rounded-2xl space-y-6">
+        <div className="flex items-center gap-3 border-b border-white/[0.05] pb-4">
           <div className="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
             <Briefcase size={18} />
           </div>
           <div>
-            <h2 className="text-base font-bold text-slate-800">Crawler Targets & Preferences</h2>
-            <p className="text-xs text-slate-500">Define search target phrases and boundary salaries</p>
+            <h2 className="text-base font-bold text-textMain">Search Preferences</h2>
+            <p className="text-xs text-textMuted">Manage role filters, location preferences, and exclusion criteria</p>
           </div>
         </div>
 
         {settings.preferred_roles.length === 0 && (
-          <div className="bg-warning/10 border border-warning/35 rounded-xl p-3.5 flex items-start gap-2.5 text-warning text-xs font-semibold">
-            <AlertCircle size={16} className="shrink-0 mt-0.5" />
-            <span>Please add at least one preferred role (e.g. "Software Engineer") to enable the crawler agent.</span>
+          <div className="bg-warning/10 border border-warning/20 rounded-2xl p-4 flex items-start gap-3 text-warning text-xs font-semibold">
+            <AlertCircle size={18} className="shrink-0 mt-0.5" />
+            <span>Please register at least one target role (e.g. "React Developer") to enable background crawling.</span>
           </div>
         )}
 
-        <div>
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Preferred Target Roles</label>
-          <div className="flex gap-2 mb-1.5">
+        {/* Roles Section */}
+        <div className="space-y-2">
+          <label className="text-2xs font-extrabold text-textDim uppercase tracking-wider block">Target Job Roles</label>
+          <div className="flex gap-2">
             <input
               type="text" 
               value={newRole}
@@ -549,19 +588,20 @@ export default function AutoApplySettings() {
                   addItem('preferred_roles', newRole, setNewRole, setNewRole);
                 }
               }}
-              placeholder="e.g. Frontend Developer, DevOps (separated by commas)"
-              className="input flex-1 !py-2.5"
+              placeholder="e.g. Full Stack Developer, DevOps (separated by commas)"
+              className="input flex-1 !py-2.5 text-xs"
             />
             <button 
               type="button"
               onClick={() => addItem('preferred_roles', newRole, setNewRole, setNewRole)} 
-              className="btn-primary text-xs px-4">
+              className="btn-primary text-xs px-4"
+            >
               <Plus size={14} />
             </button>
           </div>
 
-          <div className="flex flex-wrap gap-1 mt-1.5 mb-3">
-            <span className="text-[10px] text-slate-400 self-center mr-1">Suggested:</span>
+          <div className="flex flex-wrap gap-1.5 pt-1">
+            <span className="text-[10px] text-textDim self-center mr-1">Suggested:</span>
             {SUGGESTED_ROLES.map(role => (
               <button
                 key={role}
@@ -574,10 +614,10 @@ export default function AutoApplySettings() {
                     }));
                   }
                 }}
-                className={`text-[10px] px-2 py-0.5 rounded-md transition-all ${
+                className={`text-[10px] px-2.5 py-0.5 rounded-lg transition-all ${
                   settings.preferred_roles.includes(role)
-                    ? 'bg-primary/10 text-primary border border-primary/20 pointer-events-none'
-                    : 'bg-slate-100 text-slate-500 border border-slate-200 hover:bg-slate-200 hover:text-slate-800'
+                    ? 'bg-primary/20 text-primary border border-primary/30 pointer-events-none'
+                    : 'bg-white/[0.04] text-textMuted border border-white/[0.05] hover:bg-white/[0.08] hover:text-textMain'
                 }`}
               >
                 + {role}
@@ -585,21 +625,22 @@ export default function AutoApplySettings() {
             ))}
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 pt-2">
             {settings.preferred_roles.map((role, i) => (
-              <span key={i} className="flex items-center gap-1 bg-primary/10 text-primary text-xs font-bold px-2.5 py-1 rounded-lg border border-primary/20">
+              <span key={i} className="flex items-center gap-1.5 bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-xl border border-primary/20 shadow-[0_0_10px_rgba(124,58,237,0.06)]">
                 {role}
                 <button type="button" onClick={() => {
                   setSettings({ ...settings, preferred_roles: settings.preferred_roles.filter((_, idx) => idx !== i) });
-                }} className="hover:text-danger"><X size={12} /></button>
+                }} className="hover:text-danger ml-0.5"><X size={12} /></button>
               </span>
             ))}
           </div>
         </div>
 
-        <div>
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Preferred Locations</label>
-          <div className="flex gap-2 mb-1.5">
+        {/* Locations Section */}
+        <div className="space-y-2">
+          <label className="text-2xs font-extrabold text-textDim uppercase tracking-wider block">Target Locations</label>
+          <div className="flex gap-2">
             <input
               type="text" value={newLocation}
               onChange={e => setNewLocation(e.target.value)}
@@ -609,19 +650,20 @@ export default function AutoApplySettings() {
                   addItem('preferred_locations', newLocation, setNewLocation, setNewLocation);
                 }
               }}
-              placeholder="e.g. Remote, San Francisco (separated by commas)"
-              className="input flex-1 !py-2.5"
+              placeholder="e.g. Remote, New York (separated by commas)"
+              className="input flex-1 !py-2.5 text-xs"
             />
             <button 
               type="button"
               onClick={() => addItem('preferred_locations', newLocation, setNewLocation, setNewLocation)} 
-              className="btn-primary text-xs px-4">
+              className="btn-primary text-xs px-4"
+            >
               <Plus size={14} />
             </button>
           </div>
 
-          <div className="flex flex-wrap gap-1 mt-1.5 mb-3">
-            <span className="text-[10px] text-slate-400 self-center mr-1">Suggested:</span>
+          <div className="flex flex-wrap gap-1.5 pt-1">
+            <span className="text-[10px] text-textDim self-center mr-1">Suggested:</span>
             {SUGGESTED_LOCATIONS.map(loc => (
               <button
                 key={loc}
@@ -634,10 +676,10 @@ export default function AutoApplySettings() {
                     }));
                   }
                 }}
-                className={`text-[10px] px-2 py-0.5 rounded-md transition-all ${
+                className={`text-[10px] px-2.5 py-0.5 rounded-lg transition-all ${
                   settings.preferred_locations.includes(loc)
-                    ? 'bg-accent/10 text-accent border border-accent/20 pointer-events-none'
-                    : 'bg-slate-100 text-slate-500 border border-slate-200 hover:bg-slate-200 hover:text-slate-800'
+                    ? 'bg-accent/20 text-accent border border-accent/30 pointer-events-none'
+                    : 'bg-white/[0.04] text-textMuted border border-white/[0.05] hover:bg-white/[0.08] hover:text-textMain'
                 }`}
               >
                 + {loc}
@@ -645,19 +687,20 @@ export default function AutoApplySettings() {
             ))}
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 pt-2">
             {settings.preferred_locations.map((loc, i) => (
-              <span key={i} className="flex items-center gap-1 bg-accent/10 text-accent text-xs font-bold px-2.5 py-1 rounded-lg border border-accent/20">
+              <span key={i} className="flex items-center gap-1.5 bg-accent/10 text-accent text-xs font-bold px-3 py-1 rounded-xl border border-accent/20 shadow-[0_0_10px_rgba(6,182,212,0.06)]">
                 <MapPin size={12} /> {loc}
-                <button onClick={() => removeItem('preferred_locations', i)} className="hover:text-danger"><X size={12} /></button>
+                <button onClick={() => removeItem('preferred_locations', i)} className="hover:text-danger ml-0.5"><X size={12} /></button>
               </span>
             ))}
           </div>
         </div>
 
-        <div>
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Excluded Companies</label>
-          <div className="flex gap-2 mb-2">
+        {/* Excluded Companies */}
+        <div className="space-y-2">
+          <label className="text-2xs font-extrabold text-textDim uppercase tracking-wider block">Company Exclusion Filters</label>
+          <div className="flex gap-2">
             <input
               type="text" value={newExcluded}
               onChange={e => setNewExcluded(e.target.value)}
@@ -668,88 +711,102 @@ export default function AutoApplySettings() {
                 }
               }}
               placeholder="e.g. Meta, Netflix (separated by commas)"
-              className="input flex-1 !py-2.5"
+              className="input flex-1 !py-2.5 text-xs"
             />
             <button 
               type="button"
               onClick={() => addItem('excluded_companies', newExcluded, setNewExcluded, setNewExcluded)} 
-              className="btn-primary text-xs px-4">
+              className="btn-primary text-xs px-4"
+            >
               <Plus size={14} />
             </button>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 pt-2">
             {settings.excluded_companies.map((company, i) => (
-              <span key={i} className="flex items-center gap-1 bg-danger/10 text-danger text-xs font-bold px-2.5 py-1 rounded-lg border border-danger/20">
+              <span key={i} className="flex items-center gap-1.5 bg-danger/10 text-danger text-xs font-bold px-3 py-1 rounded-xl border border-danger/20 shadow-[0_0_10px_rgba(244,63,94,0.06)]">
                 {company}
-                <button onClick={() => removeItem('excluded_companies', i)} className="hover:text-slate-700"><X size={12} /></button>
+                <button onClick={() => removeItem('excluded_companies', i)} className="hover:text-textMain ml-0.5"><X size={12} /></button>
               </span>
             ))}
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <label className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <div className="flex items-center gap-2">
+        {/* Checkbox Options Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label className="flex items-center justify-between p-4 rounded-xl bg-white/[0.01] border border-white/[0.05] hover:bg-white/[0.02] hover:border-white/[0.08] transition-all cursor-pointer">
+            <div className="flex items-center gap-2.5">
               <Globe size={16} className="text-accent" />
-              <span className="text-xs font-semibold text-slate-700">Remote Only</span>
+              <div className="flex flex-col">
+                <span className="text-xs font-semibold text-textMain">Remote Only</span>
+                <span className="text-[10px] text-textMuted">Filter remote openings only</span>
+              </div>
             </div>
-            <input type="checkbox" checked={settings.remote_only}
-              onChange={e => setSettings(prev => ({ ...prev, remote_only: e.target.checked }))}
-              className="toggle-checkbox" />
-            <span className="toggle-slider"></span>
+            <label className="relative flex items-center cursor-pointer">
+              <input type="checkbox" checked={settings.remote_only}
+                onChange={e => setSettings(prev => ({ ...prev, remote_only: e.target.checked }))}
+                className="toggle-checkbox" />
+              <span className="toggle-slider"></span>
+            </label>
           </label>
-          <label className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <div className="flex items-center gap-2">
+
+          <label className="flex items-center justify-between p-4 rounded-xl bg-white/[0.01] border border-white/[0.05] hover:bg-white/[0.02] hover:border-white/[0.08] transition-all cursor-pointer">
+            <div className="flex items-center gap-2.5">
               <Lock size={16} className="text-warning" />
-              <span className="text-xs font-semibold text-slate-700">Manual review before submit</span>
+              <div className="flex flex-col">
+                <span className="text-xs font-semibold text-textMain">Assisted Review</span>
+                <span className="text-[10px] text-textMuted">Require manual confirm before apply</span>
+              </div>
             </div>
-            <input type="checkbox" checked={settings.require_human_review}
-              onChange={e => setSettings(prev => ({ ...prev, require_human_review: e.target.checked }))}
-              className="toggle-checkbox" />
-            <span className="toggle-slider"></span>
+            <label className="relative flex items-center cursor-pointer">
+              <input type="checkbox" checked={settings.require_human_review}
+                onChange={e => setSettings(prev => ({ ...prev, require_human_review: e.target.checked }))}
+                className="toggle-checkbox" />
+              <span className="toggle-slider"></span>
+            </label>
           </label>
         </div>
 
-        <div>
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 block">
-            <DollarSign size={13} className="inline mr-1" /> Target Salary Range
+        {/* Salary section */}
+        <div className="space-y-3">
+          <label className="text-2xs font-extrabold text-textDim uppercase tracking-wider block flex items-center gap-1">
+            <DollarSign size={13} className="text-success" /> Target Salary Boundaries (USD)
           </label>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-2xs text-slate-400 mb-1 block">Minimum ($)</label>
+              <label className="text-[10px] text-textMuted mb-1.5 block">Minimum Salary ($)</label>
               <input type="number" value={settings.salary_min}
                 onChange={e => setSettings(prev => ({ ...prev, salary_min: parseInt(e.target.value) || 0 }))}
-                className="input !py-2.5" />
+                className="input !py-2.5 text-xs" />
             </div>
             <div>
-              <label className="text-2xs text-slate-400 mb-1 block">Maximum ($)</label>
+              <label className="text-[10px] text-textMuted mb-1.5 block">Maximum Salary ($)</label>
               <input type="number" value={settings.salary_max}
                 onChange={e => setSettings(prev => ({ ...prev, salary_max: parseInt(e.target.value) || 0 }))}
-                className="input !py-2.5" />
+                className="input !py-2.5 text-xs" />
             </div>
           </div>
         </div>
       </section>
 
       {/* 4. Advanced Crawler Settings */}
-      <section className="glass-elevated rounded-2xl p-6 space-y-6">
-        <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
+      <section className="glass-card p-6 rounded-2xl space-y-6">
+        <div className="flex items-center gap-3 border-b border-white/[0.05] pb-4">
           <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
             <Sparkles size={18} />
           </div>
           <div>
-            <h2 className="text-base font-bold text-slate-800">Advanced Crawler Tuning</h2>
-            <p className="text-xs text-slate-500">Fine-tune automated crawlers and AI thresholds</p>
+            <h2 className="text-base font-bold text-textMain">Agent Tuning & Parameters</h2>
+            <p className="text-xs text-textMuted">Tweak match criteria thresholds and target crawler models</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">AI Tailoring Level</label>
+            <label className="text-2xs font-extrabold text-textDim uppercase tracking-wider mb-2.5 block">AI Tailoring Level</label>
             <select 
               value={tuningLevel}
               onChange={e => setTuningLevel(e.target.value)}
-              className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-700 focus:outline-none focus:border-primary/65"
+              className="w-full bg-[#0d101d] border border-white/[0.08] rounded-xl px-4 py-3 text-xs text-textMain focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-200"
             >
               <option value="Base Resume">No Tailoring (Speed optimized)</option>
               <option value="Standard Match">Standard Match (ATS keywords injected)</option>
@@ -758,133 +815,145 @@ export default function AutoApplySettings() {
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Crawler Portals</label>
-            <div className="flex gap-4 mt-2">
-              <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 cursor-pointer">
-                <input type="checkbox" checked={portals.linkedin} onChange={e => setPortals({...portals, linkedin: e.target.checked})} className="rounded text-primary focus:ring-primary/20" />
+            <label className="text-2xs font-extrabold text-textDim uppercase tracking-wider mb-2.5 block">Target Portals</label>
+            <div className="grid grid-cols-3 gap-2 bg-white/[0.01] border border-white/[0.05] p-2 rounded-xl">
+              <label className="flex items-center justify-center gap-2 p-2 text-xs font-semibold text-textMain cursor-pointer select-none hover:bg-white/[0.02] rounded-lg">
+                <input type="checkbox" checked={portals.linkedin} onChange={e => setPortals({...portals, linkedin: e.target.checked})} className="rounded bg-white/[0.02] border-white/[0.08] text-primary focus:ring-primary/20 h-4 w-4" />
                 LinkedIn
               </label>
-              <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 cursor-pointer">
-                <input type="checkbox" checked={portals.indeed} onChange={e => setPortals({...portals, indeed: e.target.checked})} className="rounded text-primary focus:ring-primary/20" />
+              <label className="flex items-center justify-center gap-2 p-2 text-xs font-semibold text-textMain cursor-pointer select-none hover:bg-white/[0.02] rounded-lg">
+                <input type="checkbox" checked={portals.indeed} onChange={e => setPortals({...portals, indeed: e.target.checked})} className="rounded bg-white/[0.02] border-white/[0.08] text-primary focus:ring-primary/20 h-4 w-4" />
                 Indeed
               </label>
-              <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 cursor-pointer">
-                <input type="checkbox" checked={portals.naukri} onChange={e => setPortals({...portals, naukri: e.target.checked})} className="rounded text-primary focus:ring-primary/20" />
+              <label className="flex items-center justify-center gap-2 p-2 text-xs font-semibold text-textMain cursor-pointer select-none hover:bg-white/[0.02] rounded-lg">
+                <input type="checkbox" checked={portals.naukri} onChange={e => setPortals({...portals, naukri: e.target.checked})} className="rounded bg-white/[0.02] border-white/[0.08] text-primary focus:ring-primary/20 h-4 w-4" />
                 Naukri
               </label>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">
-              Daily submits quota: <span className="text-primary">{settings.applications_per_day}</span>
+            <label className="text-2xs font-extrabold text-textDim uppercase tracking-wider mb-2.5 block flex justify-between">
+              <span>Daily Submits Quota</span>
+              <span className="text-primary font-bold">{settings.applications_per_day} submissions</span>
             </label>
             <input type="range" min="1" max="50" value={settings.applications_per_day}
               onChange={e => setSettings(prev => ({ ...prev, applications_per_day: parseInt(e.target.value) }))}
-              className="w-full" />
-            <div className="flex justify-between text-2xs text-slate-400 mt-1"><span>1</span><span>25</span><span>50</span></div>
+              className="w-full mt-2" />
+            <div className="flex justify-between text-[10px] text-textDim mt-1.5 px-0.5"><span>1</span><span>25</span><span>50</span></div>
           </div>
           <div>
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">
-              Min ATS score filter: <span className="text-primary">{settings.min_match_score}%</span>
+            <label className="text-2xs font-extrabold text-textDim uppercase tracking-wider mb-2.5 block flex justify-between">
+              <span>Minimum ATS Match Threshold</span>
+              <span className="text-accent font-bold">{settings.min_match_score}% relevance</span>
             </label>
             <input type="range" min="0" max="100" value={settings.min_match_score}
               onChange={e => setSettings(prev => ({ ...prev, min_match_score: parseInt(e.target.value) }))}
-              className="w-full" />
-            <div className="flex justify-between text-2xs text-slate-400 mt-1"><span>0%</span><span>50%</span><span>100%</span></div>
+              className="w-full mt-2" />
+            <div className="flex justify-between text-[10px] text-textDim mt-1.5 px-0.5"><span>0%</span><span>50%</span><span>100%</span></div>
           </div>
         </div>
 
-        <label className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
-          <div className="flex items-center gap-2">
+        <label className="flex items-center justify-between p-4 rounded-xl bg-white/[0.01] border border-white/[0.05] hover:bg-white/[0.02] hover:border-white/[0.08] transition-all cursor-pointer">
+          <div className="flex items-center gap-2.5">
             <ShieldCheck size={16} className="text-success" />
-            <div>
-              <span className="text-xs font-semibold text-slate-700">Pre-apply Simulator</span>
-              <p className="text-[10px] text-slate-400">Discard crawl candidates below min match score</p>
+            <div className="flex flex-col">
+              <span className="text-xs font-semibold text-textMain">Pre-Apply Simulator</span>
+              <span className="text-[10px] text-textMuted">Silently reject job listings falling below matching threshold</span>
             </div>
           </div>
-          <input type="checkbox" checked={simulateBeforeApply}
-            onChange={e => setSimulateBeforeApply(e.target.checked)}
-            className="toggle-checkbox" />
-          <span className="toggle-slider"></span>
+          <label className="relative flex items-center cursor-pointer">
+            <input type="checkbox" checked={simulateBeforeApply}
+              onChange={e => setSimulateBeforeApply(e.target.checked)}
+              className="toggle-checkbox" />
+            <span className="toggle-slider"></span>
+          </label>
         </label>
       </section>
 
       {/* 5. Schedule Settings */}
-      <section className="glass-elevated rounded-2xl p-6 space-y-6">
-        <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
+      <section className="glass-card p-6 rounded-2xl space-y-6">
+        <div className="flex items-center gap-3 border-b border-white/[0.05] pb-4">
           <div className="w-10 h-10 rounded-xl bg-warning/10 text-warning flex items-center justify-center">
             <Clock size={18} />
           </div>
           <div>
-            <h2 className="text-base font-bold text-slate-800">Crawl Clock & Schedule</h2>
-            <p className="text-xs text-slate-500">Configure time and days when auto-apply initiates searches</p>
+            <h2 className="text-base font-bold text-textMain">Crawl Clock & Active Schedule</h2>
+            <p className="text-xs text-textMuted">Determine search active time windows and operational weekdays</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Search Time</label>
+            <label className="text-2xs font-extrabold text-textDim uppercase tracking-wider mb-2 block">Trigger Time</label>
             <input type="time" value={settings.search_time}
               onChange={e => setSettings(prev => ({ ...prev, search_time: e.target.value }))}
-              className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-700 focus:outline-none focus:border-primary/65" />
+              className="w-full bg-white/[0.02] border border-white/[0.08] rounded-xl px-4 py-3 text-xs text-textMain focus:outline-none focus:border-primary/50 focus:bg-[#0d101d] transition-all duration-200" />
           </div>
           <div>
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Timezone</label>
+            <label className="text-2xs font-extrabold text-textDim uppercase tracking-wider mb-2 block">Agent Timezone</label>
             <select value={settings.timezone}
               onChange={e => setSettings(prev => ({ ...prev, timezone: e.target.value }))}
-              className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-700 focus:outline-none focus:border-primary/65">
-              <option value="America/New_York">Eastern (EST/EDT)</option>
-              <option value="America/Chicago">Central (CST/CDT)</option>
-              <option value="America/Denver">Mountain (MST/MDT)</option>
-              <option value="America/Los_Angeles">Pacific (PST/PDT)</option>
+              className="w-full bg-[#0d101d] border border-white/[0.08] rounded-xl px-4 py-3 text-xs text-textMain focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-200">
+              <option value="America/New_York">Eastern Time (EST/EDT)</option>
+              <option value="America/Chicago">Central Time (CST/CDT)</option>
+              <option value="America/Denver">Mountain Time (MST/MDT)</option>
+              <option value="America/Los_Angeles">Pacific Time (PST/PDT)</option>
               <option value="Europe/London">London (GMT/BST)</option>
               <option value="Europe/Berlin">Berlin (CET/CEST)</option>
-              <option value="Asia/Kolkata">India (IST)</option>
-              <option value="Asia/Tokyo">Tokyo (JST)</option>
+              <option value="Asia/Kolkata">India Standard Time (IST)</option>
+              <option value="Asia/Tokyo">Tokyo Standard Time (JST)</option>
             </select>
           </div>
         </div>
 
-        <div>
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 block">Days of Week</label>
-          <div className="flex flex-wrap gap-2">
-            {DAYS_OF_WEEK.map(day => (
-              <button key={day.value} onClick={() => toggleDay(day.value)}
-                type="button"
-                className={`w-9 h-9 rounded-xl text-xs font-bold border transition-all ${
-                  settings.days_of_week.includes(day.value)
-                    ? 'bg-primary/10 text-primary border-primary/20 font-extrabold'
-                    : 'bg-white text-slate-500 border-slate-200 hover:border-slate-350 hover:bg-slate-50/50'
-                }`}>{day.label}</button>
-            ))}
+        <div className="space-y-2">
+          <label className="text-2xs font-extrabold text-textDim uppercase tracking-wider mb-3 block">Operational Weekdays</label>
+          <div className="grid grid-cols-7 gap-2">
+            {DAYS_OF_WEEK.map(day => {
+              const active = settings.days_of_week.includes(day.value);
+              return (
+                <button 
+                  key={day.value} 
+                  onClick={() => toggleDay(day.value)}
+                  type="button"
+                  className={`h-10 rounded-xl text-2xs font-bold border transition-all flex items-center justify-center ${
+                    active
+                      ? 'bg-primary/20 text-primary border-primary/30 font-extrabold shadow-[0_0_12px_rgba(124,58,237,0.12)]'
+                      : 'bg-white/[0.02] text-textMuted border-white/[0.05] hover:bg-white/[0.05] hover:text-textMain hover:border-white/[0.12]'
+                  }`}
+                >
+                  {day.label}
+                </button>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* 6. Stripe Billing / Commercial Membership Mockup */}
-      <section className="glass-elevated rounded-2xl p-6 space-y-6">
-        <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
+      <section className="glass-card p-6 rounded-2xl space-y-6">
+        <div className="flex items-center gap-3 border-b border-white/[0.05] pb-4">
           <div className="w-10 h-10 rounded-xl bg-success/10 text-success flex items-center justify-center">
             <CreditCard size={18} />
           </div>
           <div>
-            <h2 className="text-base font-bold text-slate-800">Membership & Invoices</h2>
-            <p className="text-xs text-slate-500">Manage billing profile, payments, and commercial limits</p>
+            <h2 className="text-base font-bold text-textMain">Membership & Invoices</h2>
+            <p className="text-xs text-textMuted">Manage subscription tiers, invoices, and billing profile details</p>
           </div>
         </div>
 
-        <div className="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-4">
+        <div className="p-5 rounded-xl border border-white/[0.05] bg-white/[0.01] space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-sm">
+              <div className="w-10 h-10 rounded-xl bg-white/[0.02] border border-white/[0.08] flex items-center justify-center shadow-inner">
                 <CreditCard size={18} className="text-primary" />
               </div>
               <div>
-                <p className="text-xs font-bold text-slate-800">Pro Enterprise Crawler Plan</p>
-                <p className="text-[10px] text-slate-500 mt-0.5">Active &bull; Renews automatically via Stripe</p>
+                <p className="text-xs font-bold text-textMain">Pro Enterprise Autopilot Plan</p>
+                <p className="text-[10px] text-textMuted mt-0.5">Active &bull; Renews automatically via Stripe SECURE</p>
               </div>
             </div>
             <button
@@ -897,48 +966,48 @@ export default function AutoApplySettings() {
                   alert('Opening simulated secure Stripe billing customer portal...');
                 }, 1000);
               }}
-              className="px-3.5 py-2 text-2xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 hover:border-slate-300 rounded-lg transition-all flex items-center gap-1.5 shadow-sm"
+              className="px-3.5 py-2 text-2xs font-semibold bg-white/[0.04] border border-white/[0.08] text-textMain hover:bg-white/[0.08] hover:border-white/[0.15] rounded-lg transition-all flex items-center gap-1.5 shadow-sm"
             >
               {billingPortalLoading ? <Loader2 className="animate-spin" size={12} /> : <ExternalLink size={12} />}
               Manage Billing
             </button>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-3 border-t border-slate-200 text-2xs">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-white/[0.05] text-[10px] text-textMuted">
             <div>
-              <span className="text-slate-400 block font-medium">Monthly Charge</span>
-              <strong className="text-slate-800 font-bold">$49.00 USD</strong>
+              <span className="text-textDim block">Monthly Cost</span>
+              <strong className="text-textMain font-bold text-xs">$49.00 USD</strong>
             </div>
             <div>
-              <span className="text-slate-400 block font-medium">Next Renewal</span>
-              <strong className="text-slate-800 font-bold">June 25, 2026</strong>
+              <span className="text-textDim block">Renewal Date</span>
+              <strong className="text-textMain font-bold text-xs">June 25, 2026</strong>
             </div>
             <div>
-              <span className="text-slate-400 block font-medium">Payment Card</span>
-              <strong className="text-slate-800 font-bold">Visa &bull;&bull;&bull;&bull; 4242</strong>
+              <span className="text-textDim block">Payment Method</span>
+              <strong className="text-textMain font-bold text-xs">Visa &bull;&bull;&bull;&bull; 4242</strong>
             </div>
             <div>
-              <span className="text-slate-400 block font-medium">Daily Quota</span>
-              <strong className="text-primary font-bold">Unlimited Crawls</strong>
+              <span className="text-textDim block">Operation Scope</span>
+              <strong className="text-primary font-bold text-xs">Unlimited Crawls</strong>
             </div>
           </div>
         </div>
 
-        <div>
-          <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 block">Invoice history</label>
-          <div className="divide-y divide-slate-100 text-2xs">
-            <div className="py-2.5 flex justify-between items-center">
-              <span className="text-slate-600 font-semibold">May 25, 2026 &bull; #INV-0251</span>
+        <div className="space-y-2.5">
+          <label className="text-2xs font-extrabold text-textDim uppercase tracking-wider block">Invoice History</label>
+          <div className="divide-y divide-white/[0.05] text-[11px]">
+            <div className="py-3 flex justify-between items-center">
+              <span className="text-textMuted">May 25, 2026 &bull; #INV-0251</span>
               <div className="flex items-center gap-3">
-                <strong className="text-slate-800 font-bold">$49.00 USD</strong>
-                <span className="text-emerald-600 font-bold bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded">Paid</span>
+                <strong className="text-textMain font-semibold">$49.00 USD</strong>
+                <span className="text-emerald-500 font-extrabold bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded text-[10px]">Paid</span>
               </div>
             </div>
-            <div className="py-2.5 flex justify-between items-center">
-              <span className="text-slate-600 font-semibold">April 25, 2026 &bull; #INV-0198</span>
+            <div className="py-3 flex justify-between items-center">
+              <span className="text-textMuted">April 25, 2026 &bull; #INV-0198</span>
               <div className="flex items-center gap-3">
-                <strong className="text-slate-800 font-bold">$49.00 USD</strong>
-                <span className="text-emerald-600 font-bold bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded">Paid</span>
+                <strong className="text-textMain font-semibold">$49.00 USD</strong>
+                <span className="text-emerald-500 font-extrabold bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded text-[10px]">Paid</span>
               </div>
             </div>
           </div>
@@ -946,63 +1015,68 @@ export default function AutoApplySettings() {
       </section>
 
       {/* 7. Notifications */}
-      <section className="glass-elevated rounded-2xl p-6 space-y-6">
-        <div className="flex items-center gap-3 border-b border-slate-100 pb-3">
-          <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center">
+      <section className="glass-card p-6 rounded-2xl space-y-6">
+        <div className="flex items-center gap-3 border-b border-white/[0.05] pb-4">
+          <div className="w-10 h-10 rounded-xl bg-white/[0.04] text-textMuted flex items-center justify-center">
             <Bell size={18} />
           </div>
           <div>
-            <h2 className="text-base font-bold text-slate-800">Daily Crawler Reports</h2>
-            <p className="text-xs text-slate-500">Enable notification channels for daily crawl outcome statistics</p>
+            <h2 className="text-base font-bold text-textMain">Telemetry Notifications</h2>
+            <p className="text-xs text-textMuted">Configure notification endpoints to stream daily scheduler statistics</p>
           </div>
         </div>
 
         <div className="space-y-3">
-          <label className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <div className="flex items-center gap-2">
+          <label className="flex items-center justify-between p-4 rounded-xl bg-white/[0.01] border border-white/[0.05] hover:bg-white/[0.02] hover:border-white/[0.08] transition-all cursor-pointer">
+            <div className="flex items-center gap-2.5">
               <Bell size={16} className="text-primary" />
-              <div>
-                <span className="text-xs font-semibold text-slate-700">Email Notifications</span>
-                <p className="text-[10px] text-slate-400">Dispatch summaries to {user?.email}</p>
+              <div className="flex flex-col">
+                <span className="text-xs font-semibold text-textMain">Email Notifications</span>
+                <p className="text-[10px] text-textMuted">Dispatch daily log summaries to {user?.email}</p>
               </div>
             </div>
-            <input type="checkbox" checked={settings.email_notifications}
-              onChange={e => setSettings(prev => ({ ...prev, email_notifications: e.target.checked }))}
-              className="toggle-checkbox" />
-            <span className="toggle-slider"></span>
+            <label className="relative flex items-center cursor-pointer">
+              <input type="checkbox" checked={settings.email_notifications}
+                onChange={e => setSettings(prev => ({ ...prev, email_notifications: e.target.checked }))}
+                className="toggle-checkbox" />
+              <span className="toggle-slider"></span>
+            </label>
           </label>
 
-          <label className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <div className="flex items-center gap-2">
+          <label className="flex items-center justify-between p-4 rounded-xl bg-white/[0.01] border border-white/[0.05] hover:bg-white/[0.02] hover:border-white/[0.08] transition-all cursor-pointer">
+            <div className="flex items-center gap-2.5">
               <Bell size={16} className="text-info" />
-              <div>
-                <span className="text-xs font-semibold text-slate-700">Telegram Bot Notifications</span>
-                <p className="text-[10px] text-slate-400">Stream logs directly to your chat ID</p>
+              <div className="flex flex-col">
+                <span className="text-xs font-semibold text-textMain">Telegram Bot Channel</span>
+                <p className="text-[10px] text-textMuted">Stream real-time scheduler updates directly to your chat ID</p>
               </div>
             </div>
-            <input type="checkbox" checked={settings.telegram_notifications}
-              onChange={e => setSettings(prev => ({ ...prev, telegram_notifications: e.target.checked }))}
-              className="toggle-checkbox" />
-            <span className="toggle-slider"></span>
+            <label className="relative flex items-center cursor-pointer">
+              <input type="checkbox" checked={settings.telegram_notifications}
+                onChange={e => setSettings(prev => ({ ...prev, telegram_notifications: e.target.checked }))}
+                className="toggle-checkbox" />
+              <span className="toggle-slider"></span>
+            </label>
           </label>
 
           {settings.telegram_notifications && (
-            <div className="animate-fade-in">
-              <label className="text-xs font-bold text-slate-500 mb-2 block">Telegram Chat ID</label>
+            <div className="animate-fade-in space-y-2 pt-2">
+              <label className="text-2xs font-extrabold text-textDim uppercase tracking-wider block">Telegram Chat ID</label>
               <input type="text" value={settings.telegram_chat_id}
                 onChange={e => setSettings(prev => ({ ...prev, telegram_chat_id: e.target.value }))}
                 placeholder="e.g. 123456789"
-                className="input !py-2.5" />
+                className="input !py-2.5 text-xs" />
             </div>
           )}
         </div>
       </section>
 
-      <div className="flex justify-end gap-3">
-        <button onClick={() => navigate('/')} className="btn-ghost text-xs">Cancel</button>
-        <button onClick={handleSave} disabled={saving} className="btn-primary gap-2 text-xs !py-3">
+      {/* Cancel/Save actions */}
+      <div className="flex justify-end gap-3 pt-4 border-t border-white/[0.05]">
+        <button onClick={() => navigate('/')} className="btn-ghost text-xs">Cancel & Dismiss</button>
+        <button onClick={handleSave} disabled={saving} className="btn-primary gap-2 text-xs !py-3 !px-6 shadow-[0_0_15px_rgba(124,58,237,0.3)]">
           {saving ? <Loader2 className="animate-spin" size={16} /> : <Save size={16} />}
-          Save & Return
+          Save & Deploy Parameters
         </button>
       </div>
     </div>

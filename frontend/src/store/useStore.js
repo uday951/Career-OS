@@ -15,7 +15,15 @@ const useStore = create(
       setJobs: (jobs) => set({ jobs }),
       
       resumes: [],
-      setResumes: (resumes) => set({ resumes })
+      setResumes: (resumes) => set({ resumes }),
+      
+      // Automation state
+      automationSettings: null,
+      setAutomationSettings: (settings) => set({ automationSettings: settings }),
+      automationStatus: null,
+      setAutomationStatus: (status) => set({ automationStatus: status }),
+      matchScores: [],
+      setMatchScores: (scores) => set({ matchScores: scores })
     }),
     {
       name: 'careeros-storage', // saves to localStorage so reloads don't log you out

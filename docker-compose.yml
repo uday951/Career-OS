@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  # MongoDB Database Service
+  mongodb:
+    image: mongo:6.0
+    container_name: careeros-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - careeros-network
+
+  # Redis Service for BullMQ Queues
+  redis:
+    image: redis:7.0-alpine
+    container_name: careeros-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - careeros-network
+
+  # Express Backend API Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: careeros-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://mongodb:27017/careeros
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=production_secret_key_987654321
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - FRONTEND_URL=http://localhost:5173
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - careeros-network
+
+  # Vite Frontend Client Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: careeros-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE=http://localhost:5000
+    depends_on:
+      - backend
+    networks:
+      - careeros-network
+
+volumes:
+  mongo-data:
+  redis-data:
+
+networks:
+  careeros-network:
+    driver: bridge

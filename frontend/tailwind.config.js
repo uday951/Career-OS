@@ -7,35 +7,35 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Premium Blue & White Theme
-        background: '#FFFFFF',
-        surface: '#F8FAFF',
-        surfaceHover: '#F1F5FF',
-        border: '#E0E9FF',
+        // Premium Dark Theme HSL variables
+        background: 'hsl(var(--background))',
+        surface: 'hsl(var(--surface))',
+        surfaceHover: 'hsl(var(--surface-hover))',
+        border: 'hsl(var(--border))',
 
-        // Primary — Premium Blue
-        primary: '#0052CC',
-        primaryHover: '#003DB3',
-        primaryLight: '#E8F0FE',
-        primaryGlow: 'rgba(0,82,204,0.15)',
+        // Primary
+        primary: 'hsl(var(--primary))',
+        primaryHover: 'hsl(var(--primary-hover))',
+        primaryLight: 'hsl(var(--primary-light))',
+        primaryGlow: 'rgba(124, 58, 237, 0.15)',
 
-        // Accent — Premium Orange
-        accent: '#FF9900',
-        accentHover: '#E68A00',
-        accentLight: '#FFF4E6',
-        accentGlow: 'rgba(255,153,0,0.15)',
+        // Accent
+        accent: 'hsl(var(--accent))',
+        accentHover: 'hsl(var(--accent-hover))',
+        accentLight: 'rgba(6, 182, 212, 0.15)',
+        accentGlow: 'rgba(6, 182, 212, 0.15)',
 
         // Text Colors
-        textMain: '#000000',
-        textOrange: '#FF9900',
-        textMuted: '#4B5563',
-        textDim: '#6B7280',
+        textMain: 'hsl(var(--text-main))',
+        textOrange: 'hsl(var(--accent))',
+        textMuted: 'hsl(var(--text-muted))',
+        textDim: 'hsl(var(--text-dim))',
 
         // Semantic
-        success: '#16A34A',
-        warning: '#D97706',
-        danger: '#DC2626',
-        info: '#0052CC',
+        success: 'hsl(var(--success))',
+        warning: 'hsl(var(--warning))',
+        danger: 'hsl(var(--danger))',
+        info: 'hsl(var(--info))',
       },
       fontFamily: {
         sans: ['Inter var', 'Inter', 'sans-serif'],

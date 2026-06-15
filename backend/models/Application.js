@@ -17,7 +17,11 @@ const applicationSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['SAVED', 'PENDING_REVIEW', 'APPLYING', 'APPLIED', 'FAILED', 'INTERVIEWING', 'REJECTED', 'OFFERED'],
+    enum: [
+      'SAVED', 'APPLYING', 'APPLIED', 'AWAITING_RESPONSE', 
+      'RECRUITER_CONTACTED', 'INTERVIEW_SCHEDULED', 'OFFER_RECEIVED', 
+      'REJECTED', 'PENDING_REVIEW', 'FAILED', 'INTERVIEWING', 'OFFER'
+    ],
     default: 'SAVED'
   },
   match_score: {

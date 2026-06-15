@@ -1,281 +1,170 @@
 <div align="center">
 
-<img src="https://img.shields.io/badge/Career%20OS%20AI-Full%20Stack%20SaaS-7C3AED?style=for-the-badge&logo=sparkles&logoColor=white" />
-<img src="https://img.shields.io/badge/Powered%20By-Gemini%202.0%20Flash-06B6D4?style=for-the-badge&logo=google&logoColor=white" />
-<img src="https://img.shields.io/badge/Stack-MERN%20%2B%20OpenRouter-10B981?style=for-the-badge&logo=mongodb&logoColor=white" />
+<img src="https://img.shields.io/badge/Career%20OS%20V2-AI%20Job%20Search%20Operating%20System-7C3AED?style=for-the-badge&logo=sparkles&logoColor=white" />
+<img src="https://img.shields.io/badge/Theme-Dark%20Glassmorphism-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" />
+<img src="https://img.shields.io/badge/Stack-MERN%20%2B%20Playwright%20%2B%20Redis-10B981?style=for-the-badge&logo=mongodb&logoColor=white" />
 
 <br /><br />
 
-# Career OS AI — Intelligent Career Management Platform
+# CareerOS V2 — Premium AI Job Search Operating System
 
-**A production-grade, AI-powered career platform built to replace spreadsheets, generic job boards, and career coaches. 9 intelligent features. Real data. Real outcomes.**
+**A premium, dark-mode glassmorphic SaaS platform that automates and optimizes your job application lifecycle. Features automated web crawlers, AI resume tailored matching, custom Gmail outreach campaigns, drag-and-drop pipelines, and interactive telemetry dashboards.**
 
-[🚀 Live Demo](#) · [📸 Screenshots](#screenshots) · [⚙️ Setup](#setup) · [🧠 Features](#features)
+[📸 View Screenshot](#screenshots) · [⚙️ Quick Start](#-setup--running-locally) · [🧠 Features](#-features) · [🔌 API reference](#-api-endpoints)
 
 </div>
 
 ---
 
-## 🧠 What Is This?
+## 🚀 What is CareerOS V2?
 
-**Career OS AI** is a full-stack SaaS platform that transforms the chaotic job search process into an **intelligent, data-driven system**. Instead of blindly applying and waiting, users get:
+**CareerOS V2** transitions the chaotic job search process into a highly automated, unified command center (modeled after platforms like Teal, Huntr, and LoopCV). 
 
-- AI-generated cover letters and LaTeX resumes tailored per job
-- Real-time ATS compatibility scoring
-- Pre-application hiring outcome simulations
-- Live job market intelligence aligned to your profile
-- Personalized growth roadmaps and weekly performance reports
-
-This isn't a CRUD app. It's an **AI operating system for your career**.
+Powered by a dual-agent architecture (crawler + tailoring model), the platform automatically finds relevant jobs across 50+ portals, matching them against your parsed resumes using deep semantic alignment, drafting tailored cover letters, and dispatching recruiter outreach followups directly via Google APIs.
 
 ---
 
 ## 📸 Screenshots
 
-### 🏠 Career Dashboard
-> Real-time pipeline overview — total applications, average AI match rate, ATS scores, rejection rate, and quick actions. All in one command center.
+### 🏠 AI Job Command Center (Dashboard)
+> Live session logs, enqueued metrics, active crawler telemetry, and real-time Playwright browser simulator viewport streaming.
 
-![Career Dashboard](frontend/public/Screenshot%202026-04-18%20124557.png)
-
----
-
-### 📄 AI Resume Hub
-> Upload your PDF resume. AI extracts your full profile — skills, work history, education, and projects — and computes an ATS base score. Auto-generates a LaTeX-formatted Overleaf resume in one click.
-
-![AI Resume Hub](frontend/public/Screenshot%202026-04-18%20124606.png)
-
----
-
-### 🔍 Smart Job Discovery
-> Search live jobs from 50+ portals (LinkedIn, Indeed, Glassdoor) via JSearch. Filter by job type (Full Time, Part Time, Contract, Internship), location, and remote preference. Save and generate tailored materials in one click.
-
-![Smart Job Discovery](frontend/public/Screenshot%202026-04-18%20124632.png)
-
----
-
-### 🎯 Job Pipeline & AI Tailoring
-> Add jobs to your pipeline. Get an AI match percentage against your resume, see missing skills, generate a tailored cover letter, and enter the Application Hub for deep research, interview prep, and company intelligence.
-
-![Job Pipeline](frontend/public/Screenshot%202026-04-18%20124647.png)
-
----
-
-### 🤖 AI Career Coach
-> A context-aware chat interface powered by Gemini 2.0 Flash. Reads your parsed resume, your pipeline, your ATS score, and your match rate before answering. Gives hyper-personalized advice — no generic tips.
-
-![AI Coach](frontend/public/Screenshot%202026-04-18%20124656.png)
-
----
-
-### 🛡️ Shadow Application Mode
-> Before you apply, simulate the hiring outcome. Paste a job description and get: selection probability, rejection probability, top 3 rejection risks with severity ratings, keyword gap analysis, ATS-optimized headline, and 4 improvement actions with effort levels and impact estimates.
-
-![Shadow Mode](frontend/public/Screenshot%202026-04-18%20124707.png)
-
----
-
-### 🔄 Reverse Recruiter Mode
-> Flip the system. Instead of you applying to jobs, AI scans live job listings and finds which companies should be hiring *you*. Ranked by fit score, with per-job strategy, competitive edge, outreach subject line, and direct apply link. Filter by location, job type, and remote preference.
-
-![Reverse Recruiter](frontend/public/Screenshot%202026-04-18%20124717.png)
-
----
-
-### 📈 Career Growth Engine
-> Enter a target role (e.g., "Senior AI Engineer" or "Staff Backend Engineer at FAANG"). AI analyzes your resume and generates a phased roadmap: skill gaps ranked by market demand, week-by-week learning plan, portfolio-worthy project ideas with tech stacks, and curated learning resources.
-
-![Growth Engine](frontend/public/Screenshot%202026-04-18%20124727.png)
-
----
-
-### 📊 Weekly Career Report
-> Every week, the backend aggregates real MongoDB data — application counts, match rate delta, response rate, rejection patterns — then sends verified numbers to AI for narrative analysis. Grade (A–F), momentum indicator, wins, concerns, pattern analysis, and ranked next-week priorities.
-
-![Weekly Report](frontend/public/Screenshot%202026-04-18%20124736.png)
+![CareerOS V2 Command Center](frontend/public/dashboard.png)
 
 ---
 
 ## ✨ Features
 
-| Feature | Description |
-|---|---|
-| 🏠 **Career Dashboard** | Real-time pipeline stats, match rates, ATS scores, quick actions |
-| 📄 **AI Resume Hub** | PDF upload → skill extraction → ATS scoring → LaTeX resume generation |
-| 🔍 **Smart Job Discovery** | Live jobs from 50+ portals with location, type, and remote filters |
-| 🎯 **Job Pipeline** | Full application lifecycle with AI match %, cover letter generation |
-| 🤖 **AI Coach** | Context-aware chat using your actual resume and pipeline data |
-| 🛡️ **Shadow Application Mode** | Pre-application hiring simulation with 6-dimension scoring |
-| 🔄 **Reverse Recruiter** | AI inverts the search — finds jobs that should hire *you* |
-| 📈 **Career Growth Engine** | Personalized skill roadmap to reach any target role |
-| 📊 **Weekly Career Report** | Data-driven weekly performance analysis with AI narrative |
+| Module | Description |
+| :--- | :--- |
+| **🏠 Command Center** | Real-time session activity, live logging, and browser simulator screenshots streamed via Socket.IO. |
+| **🔍 Job Discovery Split-View** | Multi-portal aggregator with advanced filters, match score indicators, and assisted apply accordion (Cover Letters, screening answers, recruiter drafts). |
+| **📬 Gmail-style Outreach Hub** | Track sent outreach threads, monitor open/reply metrics, customize pending drafts, and send directly via Gmail API. |
+| **📋 Kanban Application Pipeline** | Standard drag-and-drop board (Saved, Applied, Interview, Offer, Rejected) powered by native HTML5 APIs and instant MDB updates. Includes Table and Timeline views. |
+| **📊 Interactive SVG Analytics** | Weekly application volumes, conversion funnel rings, open rate trendlines, and ATS score progressions built from raw SVGs (zero bundle weight). |
+| **📄 Resume Studio** | PDF keyword parsing, ATS match recommendations, and Overleaf-compatible LaTeX code compilers. |
+| **⚙️ Autopilot Settings** | Autopilot toggles, daily submit quotas, schedule calendars, Telegram notification hooks, and Stripe billing simulators. |
 
 ---
 
-## 🏗️ Architecture
+## 🛠️ Technology Stack
 
-```
-career-os-ai/
-├── backend/                    # Node.js + Express (ESM)
-│   ├── controllers/
-│   │   ├── aiController.js         # Resume parse, LaTeX, cover letter
-│   │   ├── intelligenceController.js  # Shadow + Reverse Recruiter
-│   │   └── growthController.js     # Growth Engine + Weekly Report
-│   ├── services/
-│   │   ├── aiService.js            # OpenRouter base wrapper
-│   │   ├── intelligenceService.js  # Shadow/Reverse AI prompts
-│   │   ├── growthService.js        # Growth/Report AI prompts
-│   │   └── jobSearchService.js     # JSearch (RapidAPI) integration
-│   ├── routes/                     # All Express routes (auth, jobs, ai, coach, shadow, reverse, growth, report)
-│   ├── models/                     # Mongoose schemas (User, Resume, Application, Job)
-│   └── server.js
-│
-└── frontend/                   # React + Tailwind (Vite)
-    └── src/
-        ├── pages/
-        │   ├── Dashboard.jsx
-        │   ├── Resumes.jsx
-        │   ├── JobDiscovery.jsx
-        │   ├── JobTracker.jsx
-        │   ├── AICoach.jsx
-        │   ├── ShadowMode.jsx
-        │   ├── ReverseRecruiter.jsx
-        │   ├── GrowthEngine.jsx
-        │   └── WeeklyReport.jsx
-        └── store/useStore.js       # Zustand global state
-```
+* **Frontend**: React 18, Vite, Zustand, Tailwind CSS, Lucide Icons, Framer Motion.
+* **Backend**: Node.js, Express (ESM), Socket.IO (real-time logs/simulator), Mongoose.
+* **Concurrency & Queueing**: BullMQ (Redis-backed queues for scraping, matching, and mailing).
+* **Automation**: Playwright (autonomous chromium sessions for LinkedIn and Indeed crawling).
+* **AI Engine**: OpenRouter (Gemini 2.0 Flash) & DeepSeek (ATS matching and cover letter tailored generation).
+* **Mail Channel**: Gmail API via Google OAuth 2.0.
 
 ---
 
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-|---|---|
-| **Frontend** | React 18 + Vite + Tailwind CSS |
-| **Backend** | Node.js + Express (ESM modules) |
-| **Database** | MongoDB + Mongoose |
-| **AI Engine** | OpenRouter API → Gemini 2.0 Flash |
-| **Job Search** | JSearch via RapidAPI (50+ portals) |
-| **Auth** | JWT + bcrypt |
-| **Resume Parse** | PDF-parse + AI extraction |
-| **LaTeX Resume** | OpenRouter AI-generated Overleaf-compatible LaTeX |
-| **State Management** | Zustand |
-
----
-
-## ⚙️ Setup
+## ⚙️ Setup & Running Locally
 
 ### Prerequisites
-- Node.js v18+
-- MongoDB URI (Atlas or local)
-- [OpenRouter API Key](https://openrouter.ai) (free tier available)
-- [RapidAPI Key](https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch) — for Job Discovery and Reverse Recruiter
+- Node.js (v18+)
+- MongoDB (Atlas URI or Local Instance)
+- Redis Server (Required for BullMQ queue operations)
+- Google Cloud Console Credentials (OAuth 2.0 Client for Login & Gmail API)
 
-### 1. Clone the repository
+### 1. Clone & Install Dependencies
+
 ```bash
+# Clone the repository
 git clone https://github.com/your-username/ai-applyer.git
 cd ai-applyer
-```
 
-### 2. Configure environment variables
-```bash
+# Install Backend Dependencies
 cd backend
-cp .env.example .env
+npm install
+
+# Install Frontend Dependencies
+cd ../frontend
+npm install
 ```
 
-Edit `.env`:
+### 2. Configure Environment Variables
+
+Create a `.env` file in the **backend** directory:
 ```env
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
-OPENROUTER_API_KEY=your_openrouter_api_key
-RAPIDAPI_KEY=your_rapidapi_key
 PORT=5000
+NODE_ENV=development
+
+# Database & Redis
+MONGO_URI=your_mongodb_atlas_connection_string
+REDIS_URL=redis://localhost:6379
+
+# AI & Job API keys
+OPENROUTER_API_KEY=your_openrouter_api_key
+DEEPSEEK_API_KEY=your_deepseek_api_key
+RAPIDAPI_KEY=your_jsearch_rapidapi_key
+
+# Google OAuth Credentials
+GOOGLE_CLIENT_ID=your_google_oauth_client_id
+GMAIL_CLIENT_SECRET=your_google_oauth_client_secret
+FRONTEND_URL=http://localhost:5173
 ```
 
-### 3. Install and run backend
+Create a `.env` file in the **frontend** directory:
+```env
+VITE_API_URL=http://localhost:5000
+VITE_GOOGLE_CLIENT_ID=your_google_oauth_client_id
+```
+
+### 3. Google OAuth Setup
+To allow authentication and Gmail outreach to work locally:
+1. Visit [Google Cloud Console Credentials](https://console.cloud.google.com/).
+2. Under your OAuth 2.0 Web Application client:
+   - Add to **Authorized JavaScript origins**: `http://localhost:5173`
+   - Add to **Authorized redirect URIs**: `http://localhost:5173/gmail-callback` and `http://localhost:5000/api/auth/google`
+3. Save the credentials and enable the **Gmail API** for your project.
+
+### 4. Execute Servers
+
+Start your local Redis server first. Then run the backend and frontend in separate terminals:
+
 ```bash
+# Terminal 1: Backend Dev Server
 cd backend
-npm install
 npm run dev
-```
 
-### 4. Install and run frontend
-```bash
+# Terminal 2: Frontend Dev Server
 cd frontend
-npm install
 npm run dev
 ```
 
-App runs at → `http://localhost:5173`  
-API runs at → `http://localhost:5000`
+- **Frontend App**: [http://localhost:5173](http://localhost:5173)
+- **Backend API**: [http://localhost:5000](http://localhost:5000)
 
 ---
 
-## 🔌 API Reference
+## 🔌 API Endpoints
 
-| Method | Endpoint | Description |
-|---|---|---|
-| `POST` | `/api/auth/register` | Register user |
-| `POST` | `/api/auth/login` | Login, returns JWT |
-| `GET` | `/api/resumes` | List user resumes |
-| `POST` | `/api/ai/parse-resume` | Parse PDF → extract skills |
-| `POST` | `/api/ai/analyze-match` | Resume vs job match scoring |
-| `POST` | `/api/ai/cover-letter` | Generate tailored cover letter |
-| `POST` | `/api/ai/latex-resume` | Generate LaTeX resume |
-| `GET` | `/api/coach/profile` | Fetch resume profile for AI Coach |
-| `POST` | `/api/coach/chat` | AI Coach chat (context-aware) |
-| `POST` | `/api/shadow/analyze` | Shadow Application Mode simulation |
-| `POST` | `/api/reverse/jobs` | Reverse Recruiter — live job matching |
-| `POST` | `/api/growth/plan` | Career Growth Engine roadmap |
-| `GET` | `/api/report/weekly` | Weekly Career Report (AI + metrics) |
-| `GET` | `/api/report/metrics` | Raw DB metrics only (instant) |
-| `PATCH` | `/api/jobs/application/:id/status` | Manual application status update |
+### Auth & User Profile
+- `POST /api/auth/register` - Create user
+- `POST /api/auth/login` - Authenticate & return JWT
+- `POST /api/auth/google` - Exchange Google Token & authenticate
+- `GET /api/auth/me` - Profile metadata
 
----
+### Resumes & AI Studio
+- `GET /api/resumes` - List resumes
+- `POST /api/resumes/upload` - Upload PDF
+- `POST /api/ai/parse-resume/:id` - Extract resume skills & metadata
+- `POST /api/ai/latex-resume` - Compile LaTeX template
 
-## 🧩 Key Engineering Decisions
+### Job Discoveries & Pipelines
+- `GET /api/jobs` - List enqueued pipeline applications
+- `POST /api/jobs/auto-apply` - Match, score, and create application log
+- `PUT /api/jobs/:id/status` - Update pipeline state (Kanban drag-and-drop)
 
-### Hybrid AI Architecture
-The Weekly Career Report uses a **strict hybrid approach**: the backend computes all metrics from MongoDB (application counts, match rates, response rates, rejection patterns), then sends **only verified numbers** to AI. The AI is explicitly forbidden from guessing or estimating — it only provides narrative and analysis. This prevents hallucination.
-
-### Structured JSON AI Outputs
-All AI features (Shadow Mode, Reverse Recruiter, Growth Engine, Weekly Report) use strict JSON schema prompts. The AI returns machine-readable structured data that the frontend renders component-by-component — not free-form text.
-
-### Context-Aware AI Coach
-The AI Coach fetches the user's latest parsed resume from MongoDB before every response. The system prompt is dynamically built with the user's actual skills, work history, education, projects, and live pipeline metrics. The AI knows the user's first name, company, ATS score, and application count.
-
-### Resume-Driven Intelligence
-Shadow Mode and Reverse Recruiter automatically detect and use the user's latest parsed resume. No manual input required — the system knows who you are.
+### Gmail Outreach
+- `GET /api/outreach/gmail/auth-url` - Generate Google permissions prompt
+- `POST /api/outreach/gmail/callback` - Authenticate Gmail refresh tokens
+- `POST /api/outreach/generate-draft` - Generate follow-up template body
+- `POST /api/outreach/send-outreach` - Send Gmail email
+- `GET /api/outreach/stats` - Fetch aggregate email open/reply counters
+- `GET /api/outreach/history` - Fetch sent thread logs
 
 ---
 
-## 📁 Environment Variables
-
-| Variable | Required | Description |
-|---|---|---|
-| `MONGO_URI` | ✅ | MongoDB connection string |
-| `JWT_SECRET` | ✅ | Secret for JWT signing |
-| `OPENROUTER_API_KEY` | ✅ | OpenRouter key (Gemini 2.0 Flash) |
-| `RAPIDAPI_KEY` | ✅ for job search | RapidAPI key for JSearch |
-| `PORT` | Optional | Default: 5000 |
-
----
-
-## 🙋 About the Developer
-
-Built by **Uday Kiran** — a Full Stack Developer specializing in AI-integrated MERN applications.
-
-- 💻 Stack: React, Node.js, Express, MongoDB, Tailwind CSS
-- 🤖 AI: OpenRouter (Gemini, Claude, GPT), prompt engineering, structured JSON generation
-- 📦 Tooling: Vite, Zustand, Mongoose, JWT, PDF-parse
-
-> This project demonstrates production-level thinking: real data pipelines, context-aware AI, structured output engineering, and a premium UI that rivals funded SaaS products.
-
----
-
-<div align="center">
-
-**⭐ Star this repo if it impressed you**
-
-[![GitHub stars](https://img.shields.io/github/stars/your-username/ai-applyer?style=social)](https://github.com/your-username/ai-applyer)
-
-</div>
+## 🙋 Maintainer
+Developed by **Uday Kiran** — Senior UI/UX and MERN Software Engineer.

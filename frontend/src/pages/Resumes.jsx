@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import useStore from '../store/useStore';
 import API_BASE from '../config/api';
-import { Upload, FileText, CheckCircle, Sparkles, Loader2, Code2, Copy, X, Eye } from 'lucide-react';
+import { Upload, FileText, CheckCircle, Sparkles, Loader2, Code2, Copy, X, Eye, Terminal } from 'lucide-react';
+import ManualResumeBuilder from '../components/ManualResumeBuilder';
+import JakeResumeBuilder from '../components/JakeResumeBuilder';
 
 // Renders a Jake's-resume-style HTML preview from parsed resume JSON
 function ResumePreview({ resumeJson, targetRole }) {
@@ -139,6 +141,7 @@ export default function Resumes() {
   const [latexCode, setLatexCode] = useState('');
   const [latexGenerating, setLatexGenerating] = useState(false);
   const [activeTab, setActiveTab] = useState('preview'); // 'preview' | 'code'
+  const [resumeTab, setResumeTab] = useState('uploaded'); // 'uploaded' | 'manual'
 
   const config = { headers: { Authorization: `Bearer ${token}` } };
 
@@ -224,6 +227,41 @@ export default function Resumes() {
         <h1 className="text-3xl font-bold">Resume Hub</h1>
       </div>
 
+      {/* Tab Navigation */}
+      <div className="flex gap-4 mb-8 border-b border-white/10">
+        <button
+          onClick={() => setResumeTab('uploaded')}
+          className={`px-4 py-3 font-semibold transition-colors ${
+            resumeTab === 'uploaded'
+              ? 'text-primary border-b-2 border-primary'
+              : 'text-gray-400 hover:text-white'
+          }`}
+        >
+          <Upload className="inline mr-2" size={18} /> Uploaded Resumes
+        </button>
+        <button
+          onClick={() => setResumeTab('manual')}
+          className={`px-4 py-3 font-semibold transition-colors ${
+            resumeTab === 'manual'
+              ? 'text-primary border-b-2 border-primary'
+              : 'text-gray-400 hover:text-white'
+          }`}
+        >
+          <Code2 className="inline mr-2" size={18} /> Manual Builder
+        </button>
+        <button
+          onClick={() => setResumeTab('pro')}
+          className={`px-4 py-3 font-semibold transition-colors ${
+            resumeTab === 'pro'
+              ? 'text-primary border-b-2 border-primary'
+              : 'text-gray-400 hover:text-white'
+          }`}
+        >
+          <Terminal className="inline mr-2" size={18} /> Pro ATS Editor
+        </button>
+      </div>
+
+      {resumeTab === 'uploaded' ? (
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Upload Column */}
         <div className="glass p-6 h-fit">
@@ -275,7 +313,7 @@ export default function Resumes() {
               </div>
 
               {resume.parsed_data?.work_history && (
-                <div className="bg-black/20 p-4 rounded-lg border border-white/5">
+                <div className="bg-white/[0.04] p-4 rounded-lg border border-white/[0.08]">
                   <h4 className="text-sm font-semibold text-textMuted mb-2 uppercase tracking-wide">Extracted Skills</h4>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {resume.parsed_data.master_skills?.map((s, i) => (
@@ -294,6 +332,11 @@ export default function Resumes() {
           ))}
         </div>
       </div>
+      ) : resumeTab === 'manual' ? (
+        <ManualResumeBuilder />
+      ) : (
+        <JakeResumeBuilder />
+      )}
 
       {/* LaTeX Resume Builder Modal */}
       {latexModalOpen && (
@@ -336,7 +379,7 @@ export default function Resumes() {
                     <label className="block text-sm font-semibold text-blue-300 mb-2">Target Role / Title:</label>
                     <input 
                       type="text" 
-                      className="w-full bg-black/40 border border-white/10 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 text-lg"
+                      className="w-full bg-white/[0.04] border border-white/[0.1] rounded-lg py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 focus:bg-white/[0.06] text-lg"
                       value={targetRole}
                       onChange={(e) => setTargetRole(e.target.value)}
                       placeholder="e.g. Senior Frontend Engineer"
@@ -355,7 +398,7 @@ export default function Resumes() {
               /* Split pane: tabs on mobile, side-by-side on desktop */
               <div className="flex-1 flex flex-col overflow-hidden">
                 {/* Tabs (visible on small screens) */}
-                <div className="flex border-b border-white/10 bg-black/20 shrink-0 lg:hidden">
+                <div className="flex border-b border-white/10 bg-white/[0.02] shrink-0 lg:hidden">
                   <button onClick={() => setActiveTab('preview')} className={`flex-1 py-2 text-sm font-bold flex items-center justify-center gap-2 transition-colors ${activeTab === 'preview' ? 'text-blue-400 border-b-2 border-blue-400 bg-blue-500/10' : 'text-gray-400'}`}>
                     <Eye size={16} /> Preview
                   </button>
@@ -379,7 +422,7 @@ export default function Resumes() {
 
                   {/* Code Pane */}
                   <div className={`flex-1 flex flex-col overflow-hidden ${activeTab !== 'code' ? 'hidden lg:flex' : ''}`}>
-                    <div className="text-xs text-green-400 font-mono px-4 py-2 bg-black/40 border-b border-white/10 flex items-center gap-2 shrink-0">
+                    <div className="text-xs text-green-400 font-mono px-4 py-2 bg-white/[0.04] border-b border-white/10 flex items-center gap-2 shrink-0">
                       <Code2 size={12} /> main.tex — Copy into overleaf.com/project/new
                     </div>
                     <textarea 

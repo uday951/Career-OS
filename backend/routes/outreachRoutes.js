@@ -175,20 +175,30 @@ router.post('/send-outreach', protect, async (req, res, next) => {
     const trackingId = new mongoose.Types.ObjectId();
 
     // Dispatch email
-    const emailResult = await sendGmailEmail({
-      userId: req.user._id,
-      to: recipient_email,
-      subject,
-      body,
-      trackingId,
-      resumeId: application.resume_id?._id
-    });
+    let emailResult;
+    try {
+      emailResult = await sendGmailEmail({
+        userId: req.user._id,
+        to: recipient_email,
+        subject,
+        body,
+        trackingId,
+        resumeId: application.resume_id?._id
+      });
+    } catch (gmailErr) {
+      console.error('[Gmail Dispatch Error]:', gmailErr);
+      return res.status(400).json({ 
+        message: `Gmail delivery failed: ${gmailErr.message || gmailErr}. Please reconnect Gmail in Settings.` 
+      });
+    }
 
     // Create or update EmailTracking record
     let tracking = await EmailTracking.findOne({ user_id: req.user._id, application_id: applicationId });
     if (tracking) {
       tracking.recipient_email = recipient_email;
       tracking.recipient_name = recipient_name;
+      tracking.company = application.job_id?.company || '';
+      tracking.job_title = application.job_id?.title || '';
       tracking.subject = subject;
       tracking.body = body;
       tracking.gmail_message_id = emailResult.messageId;
@@ -203,8 +213,8 @@ router.post('/send-outreach', protect, async (req, res, next) => {
         email_type: 'recruiter_intro',
         recipient_email,
         recipient_name,
-        company: application.job_id.company,
-        job_title: application.job_id.title,
+        company: application.job_id?.company || '',
+        job_title: application.job_id?.title || '',
         subject,
         body,
         gmail_message_id: emailResult.messageId,
@@ -220,6 +230,46 @@ router.post('/send-outreach', protect, async (req, res, next) => {
     await application.save();
 
     res.json({ success: true, tracking });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Get outreach history for current user
+router.get('/history', protect, async (req, res, next) => {
+  try {
+    const emails = await EmailTracking.find({ user_id: req.user._id })
+      .sort({ sent_at: -1 })
+      .limit(50);
+    res.json({ emails });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Get outreach stats
+router.get('/stats', protect, async (req, res, next) => {
+  try {
+    const total = await EmailTracking.countDocuments({ user_id: req.user._id });
+    const opened = await EmailTracking.countDocuments({ user_id: req.user._id, status: 'opened' });
+    const replied = await EmailTracking.countDocuments({ user_id: req.user._id, status: 'replied' });
+    const delivered = await EmailTracking.countDocuments({ user_id: req.user._id, status: 'delivered' });
+    const sent = await EmailTracking.countDocuments({ user_id: req.user._id, status: 'sent' });
+    const pending = 0; // Drafts not tracked in EmailTracking database right now
+
+    const openRate = total > 0 ? Math.round((opened / total) * 100) : 0;
+    const replyRate = total > 0 ? Math.round((replied / total) * 100) : 0;
+
+    res.json({
+      sent,
+      delivered,
+      opened,
+      replied,
+      pending,
+      total,
+      openRate,
+      replyRate
+    });
   } catch (error) {
     next(error);
   }
