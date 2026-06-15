@@ -37,6 +37,7 @@ Powered by a dual-agent architecture (crawler + tailoring model), the platform a
 
 | Module | Description |
 | :--- | :--- |
+| **🤖 Auto-Apply Agent (Autopilot)** | Redis-backed BullMQ workers executing background Playwright Chromium browsers to crawl, screen, tailor, and submit job applications. |
 | **🏠 Command Center** | Real-time session activity, live logging, and browser simulator screenshots streamed via Socket.IO. |
 | **🔍 Job Discovery Split-View** | Multi-portal aggregator with advanced filters, match score indicators, and assisted apply accordion (Cover Letters, screening answers, recruiter drafts). |
 | **📬 Gmail-style Outreach Hub** | Track sent outreach threads, monitor open/reply metrics, customize pending drafts, and send directly via Gmail API. |
