@@ -76,6 +76,9 @@ export default function Dashboard() {
               timestamp: new Date(log.timestamp)
             })));
           }
+          if (aStatus.data.browser_state?.screenshot_url) {
+            setScreenshot(aStatus.data.browser_state.screenshot_url);
+          }
         }
       } catch (err) {
         console.error('Error fetching dashboard data:', err);
@@ -110,7 +113,9 @@ export default function Dashboard() {
       auth: { token }
     });
 
-    socketRef.current.emit('join-agent-room', user._id);
+    socketRef.current.on('connect', () => {
+      socketRef.current.emit('join-agent-room', user._id);
+    });
 
     socketRef.current.on('activity', (data) => {
       setActivityLog(prev => [...prev, {
@@ -177,6 +182,9 @@ export default function Dashboard() {
           ...log,
           timestamp: new Date(log.timestamp)
         })));
+      }
+      if (data.browser_state?.screenshot_url) {
+        setScreenshot(data.browser_state.screenshot_url);
       }
     } catch (error) {
       console.error('Failed to fetch agent status:', error);
