@@ -807,7 +807,7 @@ export default function AIPortfolioStudio() {
                   }`}
                 >
                   {/* Internal Scrollable preview frame */}
-                  <div className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar">
+                  <div className="w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar transform translate-y-0">
                     <PortfolioThemeRenderer 
                       data={getPreviewData()} 
                       theme={selectedTheme} 
