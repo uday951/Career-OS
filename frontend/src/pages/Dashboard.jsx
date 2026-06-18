@@ -654,6 +654,16 @@ export default function Dashboard() {
                 </div>
                 <ChevronRight size={14} className="text-textDim group-hover:translate-x-0.5 transition-transform" />
               </Link>
+              <Link to="/portfolio" className="group flex items-center gap-4 p-3.5 rounded-xl border border-white/[0.05] bg-white/[0.01] hover:bg-white/[0.03] transition-all">
+                <div className="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center shrink-0">
+                  <Sparkles size={15} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-bold text-textMain">AI Portfolio Studio</p>
+                  <p className="text-[10px] text-textMuted truncate">Deploy premium website & compile PDFs</p>
+                </div>
+                <ChevronRight size={14} className="text-textDim group-hover:translate-x-0.5 transition-transform" />
+              </Link>
               <Link to="/settings" className="group flex items-center gap-4 p-3.5 rounded-xl border border-white/[0.05] bg-white/[0.01] hover:bg-white/[0.03] transition-all">
                 <div className="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
                   <Settings size={15} />

@@ -22,6 +22,7 @@ import Analytics from './pages/Analytics';
 import AutoApplySettings from './pages/AutoApplySettings';
 import GmailCallback from './pages/GmailCallback';
 import ResumeStudio from './pages/ResumeStudio';
+import AIPortfolioStudio from './pages/AIPortfolioStudio';
 import API_BASE from './config/api';
 
 const NAV = [
@@ -30,6 +31,7 @@ const NAV = [
   { to: '/outreach',   icon: Mail,             label: 'AI Outreach'                },
   { to: '/jobs',       icon: Briefcase,        label: 'Applications'               },
   { to: '/resumes',    icon: FileText,         label: 'Resume Studio'              },
+  { to: '/portfolio',  icon: Sparkles,         label: 'AI Portfolio'               },
   { to: '/analytics',  icon: BarChart2,        label: 'Analytics'                  },
   { to: '/settings',   icon: Settings,         label: 'Settings'                   },
 ];
@@ -322,6 +324,7 @@ function App() {
           <Route path="/outreach"       element={<AIOutreach />} />
           <Route path="/jobs"           element={<JobTracker />} />
           <Route path="/resumes"        element={<ResumeStudio />} />
+          <Route path="/portfolio"      element={<AIPortfolioStudio />} />
           <Route path="/analytics"      element={<Analytics />} />
           <Route path="/settings"       element={<AutoApplySettings />} />
           <Route path="/coach"          element={<AICoach />} />

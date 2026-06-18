@@ -22,6 +22,7 @@ import automationRoutes from './routes/automationRoutes.js';
 import agentRoutes from './routes/agentRoutes.js';
 import outreachRoutes from './routes/outreachRoutes.js';
 import resumeStudioRoutes from './routes/resumeStudioRoutes.js';
+import portfolioRoutes from './routes/portfolioRoutes.js';
 
 // Import workers
 import './workers/searchWorker.js';
@@ -78,6 +79,7 @@ app.use('/api/automation', automationRoutes);
 app.use('/api/agent', agentRoutes);
 app.use('/api/outreach', outreachRoutes);
 app.use('/api/resume', resumeStudioRoutes);
+app.use('/api/portfolio', portfolioRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Career OS AI API is running' });
