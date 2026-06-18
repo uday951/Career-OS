@@ -189,6 +189,10 @@ Return ONLY the raw JSON object. Do not wrap in markdown fences.`;
     else if (archetype.includes('founder') || archetype.includes('corporate') || archetype.includes('enterprise')) startTheme = 'Theme 6: Startup Founder';
     else if (archetype.includes('creative') || archetype.includes('agency') || archetype.includes('cyberpunk')) startTheme = 'Theme 7: Creative Developer';
 
+    if (responseJson.layout_components && responseJson.layout_components.heroStyle === 'hero-4') {
+      responseJson.layout_components.heroStyle = 'hero-2';
+    }
+
     const portfolioData = {
       user_id: req.user._id,
       resume_id: sessionId || null,
@@ -419,7 +423,7 @@ export async function updatePortfolio(req, res, next) {
           }
         },
         layout_components: {
-          heroStyle: 'hero-4',
+          heroStyle: 'hero-2',
           projectsStyle: 'masonry',
           skillsStyle: 'cloud',
           aboutStyle: 'overview',
@@ -488,6 +492,9 @@ export async function updatePortfolio(req, res, next) {
       }
     } else {
       if (layout_components) {
+        if (layout_components.heroStyle === 'hero-4') {
+          layout_components.heroStyle = 'hero-2';
+        }
         portfolio.layout_components = {
           ...portfolio.layout_components?.toObject?.() || portfolio.layout_components,
           ...layout_components
