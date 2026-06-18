@@ -5,7 +5,8 @@ import {
   Sparkles, Monitor, Tablet, Smartphone, Globe, Download, 
   RefreshCw, CheckCircle2, AlertCircle, FileText, Github, 
   Linkedin, Mail, Edit3, Award, MessageSquare, BookOpen, 
-  Eye, Save, ListTodo, Plus, Trash2, ArrowUpRight, ShieldCheck, BarChart2
+  Eye, Save, ListTodo, Plus, Trash2, ArrowUpRight, ShieldCheck, BarChart2,
+  Maximize2, Minimize2
 } from 'lucide-react';
 import useStore from '../store/useStore';
 import API_BASE from '../config/api';
@@ -20,6 +21,7 @@ export default function AIPortfolioStudio() {
   // Editor States
   const [activeTab, setActiveTab] = useState('themes'); // 'themes', 'branding', 'projects', 'content', 'sections'
   const [viewport, setViewport] = useState('desktop'); // 'desktop', 'tablet', 'mobile'
+  const [isExpandedPreview, setIsExpandedPreview] = useState(false);
   
   // Custom Override States
   const [customTagline, setCustomTagline] = useState('');
@@ -391,7 +393,7 @@ export default function AIPortfolioStudio() {
           <div className="flex-1 flex overflow-hidden">
             
             {/* LEFT COLUMN: Controls & Settings */}
-            <div className="w-[420px] shrink-0 border-r border-white/[0.06] bg-[#060813] flex flex-col h-full overflow-hidden">
+            <div className={`shrink-0 border-r border-white/[0.06] bg-[#060813] flex flex-col h-full overflow-hidden transition-all duration-300 ${isExpandedPreview ? 'w-0 border-r-0 opacity-0 pointer-events-none' : 'w-[420px]'}`}>
               
               {/* Tab Selector Buttons */}
               <div className="flex border-b border-white/[0.06] p-2 bg-[#090c16]/50 overflow-x-auto no-scrollbar gap-1 shrink-0">
@@ -776,24 +778,46 @@ export default function AIPortfolioStudio() {
                   <span className="bg-primary/10 text-primary border border-primary/20 text-[9px] font-bold px-2 py-0.5 rounded">AUTO_SYNCING</span>
                 </div>
                 
-                {/* view ports */}
-                <div className="flex items-center gap-1.5 bg-white/[0.03] border border-white/[0.06] p-1 rounded-lg">
-                  {[
-                    { id: 'desktop', icon: Monitor },
-                    { id: 'tablet', icon: Tablet },
-                    { id: 'mobile', icon: Smartphone }
-                  ].map(v => {
-                    const Icon = v.icon;
-                    return (
-                      <button
-                        key={v.id}
-                        onClick={() => setViewport(v.id)}
-                        className={`p-1.5 rounded-md transition-colors ${viewport === v.id ? 'bg-primary text-white' : 'text-textDim hover:text-white'}`}
-                      >
-                        <Icon size={14} />
-                      </button>
-                    );
-                  })}
+                {/* view ports & expand preview */}
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1.5 bg-white/[0.03] border border-white/[0.06] p-1 rounded-lg">
+                    {[
+                      { id: 'desktop', icon: Monitor },
+                      { id: 'tablet', icon: Tablet },
+                      { id: 'mobile', icon: Smartphone }
+                    ].map(v => {
+                      const Icon = v.icon;
+                      return (
+                        <button
+                          key={v.id}
+                          onClick={() => setViewport(v.id)}
+                          className={`p-1.5 rounded-md transition-colors ${viewport === v.id ? 'bg-primary text-white' : 'text-textDim hover:text-white'}`}
+                        >
+                          <Icon size={14} />
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="h-4 w-px bg-white/[0.08]" />
+
+                  <button
+                    onClick={() => setIsExpandedPreview(!isExpandedPreview)}
+                    className="p-1.5 rounded-lg bg-white/[0.03] border border-white/[0.06] text-textDim hover:text-white transition-all flex items-center gap-1.5 text-2xs font-semibold"
+                    title={isExpandedPreview ? "Show Editor" : "Expand Preview"}
+                  >
+                    {isExpandedPreview ? (
+                      <>
+                        <Minimize2 size={13} />
+                        <span>Show Editor</span>
+                      </>
+                    ) : (
+                      <>
+                        <Maximize2 size={13} />
+                        <span>Expand Preview</span>
+                      </>
+                    )}
+                  </button>
                 </div>
               </div>
 
