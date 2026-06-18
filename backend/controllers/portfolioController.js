@@ -302,18 +302,203 @@ export async function updatePortfolio(req, res, next) {
 
     const { selected_theme, customization, layout_components, design_system } = req.body;
     
-    if (selected_theme) portfolio.selected_theme = selected_theme;
-    if (layout_components) {
-      portfolio.layout_components = {
-        ...portfolio.layout_components?.toObject?.() || portfolio.layout_components,
-        ...layout_components
-      };
-    }
-    if (design_system) {
-      portfolio.design_system = {
-        ...portfolio.design_system?.toObject?.() || portfolio.design_system,
-        ...design_system
-      };
+    const themePresets = {
+      'Theme 1: Vercel': {
+        design_system: {
+          colors: {
+            bg: '0 0% 0%',
+            surface: '0 0% 7%',
+            text: '0 0% 100%',
+            primary: '0 0% 100%',
+            accent: '0 0% 63%',
+            border: '0 0% 15%'
+          },
+          typography: {
+            headingFont: 'font-sans',
+            bodyFont: 'font-mono'
+          }
+        },
+        layout_components: {
+          heroStyle: 'hero-2',
+          projectsStyle: 'showcase',
+          skillsStyle: 'interactive',
+          aboutStyle: 'story',
+          contactStyle: 'form',
+          navigationStyle: 'floating',
+          sectionOrder: ['navigation', 'hero', 'about', 'skills', 'projects', 'contact']
+        }
+      },
+      'Theme 2: Linear': {
+        design_system: {
+          colors: {
+            bg: '248 100% 3%',
+            surface: '248 30% 8%',
+            text: '0 0% 98%',
+            primary: '260 100% 65%',
+            accent: '280 100% 70%',
+            border: '250 20% 15%'
+          },
+          typography: {
+            headingFont: 'font-outfit',
+            bodyFont: 'font-sans'
+          }
+        },
+        layout_components: {
+          heroStyle: 'hero-1',
+          projectsStyle: 'bento',
+          skillsStyle: 'interactive',
+          aboutStyle: 'timeline',
+          contactStyle: 'cta',
+          navigationStyle: 'floating',
+          sectionOrder: ['navigation', 'hero', 'about', 'skills', 'projects', 'contact']
+        }
+      },
+      'Theme 3: Apple': {
+        design_system: {
+          colors: {
+            bg: '0 0% 96%',
+            surface: '0 0% 100%',
+            text: '0 0% 10%',
+            primary: '0 0% 0%',
+            accent: '210 100% 50%',
+            border: '0 0% 90%'
+          },
+          typography: {
+            headingFont: 'font-outfit',
+            bodyFont: 'font-sans'
+          }
+        },
+        layout_components: {
+          heroStyle: 'hero-3',
+          projectsStyle: 'showcase',
+          skillsStyle: 'interactive',
+          aboutStyle: 'story',
+          contactStyle: 'form',
+          navigationStyle: 'floating',
+          sectionOrder: ['navigation', 'hero', 'about', 'skills', 'projects', 'contact']
+        }
+      },
+      'Theme 4: Minimal Luxury': {
+        design_system: {
+          colors: {
+            bg: '20 15% 4%',
+            surface: '20 10% 8%',
+            text: '30 20% 95%',
+            primary: '30 30% 60%',
+            accent: '40 20% 70%',
+            border: '20 10% 12%'
+          },
+          typography: {
+            headingFont: 'font-playfair',
+            bodyFont: 'font-serif'
+          }
+        },
+        layout_components: {
+          heroStyle: 'hero-5',
+          projectsStyle: 'showcase',
+          skillsStyle: 'interactive',
+          aboutStyle: 'story',
+          contactStyle: 'cta',
+          navigationStyle: 'floating',
+          sectionOrder: ['navigation', 'hero', 'about', 'skills', 'projects', 'contact']
+        }
+      },
+      'Theme 5: Modern AI Engineer': {
+        design_system: {
+          colors: {
+            bg: '220 30% 3%',
+            surface: '220 20% 7%',
+            text: '180 100% 95%',
+            primary: '180 100% 50%',
+            accent: '200 100% 50%',
+            border: '180 40% 12%'
+          },
+          typography: {
+            headingFont: 'font-mono',
+            bodyFont: 'font-sans'
+          }
+        },
+        layout_components: {
+          heroStyle: 'hero-4',
+          projectsStyle: 'masonry',
+          skillsStyle: 'cloud',
+          aboutStyle: 'overview',
+          contactStyle: 'social',
+          navigationStyle: 'dock',
+          sectionOrder: ['navigation', 'hero', 'about', 'skills', 'projects', 'contact']
+        }
+      },
+      'Theme 6: Startup Founder': {
+        design_system: {
+          colors: {
+            bg: '230 20% 5%',
+            surface: '230 15% 9%',
+            text: '0 0% 98%',
+            primary: '220 90% 56%',
+            accent: '160 84% 39%',
+            border: '230 15% 15%'
+          },
+          typography: {
+            headingFont: 'font-outfit',
+            bodyFont: 'font-sans'
+          }
+        },
+        layout_components: {
+          heroStyle: 'hero-6',
+          projectsStyle: 'showcase',
+          skillsStyle: 'interactive',
+          aboutStyle: 'timeline',
+          contactStyle: 'form',
+          navigationStyle: 'floating',
+          sectionOrder: ['navigation', 'hero', 'about', 'skills', 'projects', 'contact']
+        }
+      },
+      'Theme 7: Creative Developer': {
+        design_system: {
+          colors: {
+            bg: '280 40% 4%',
+            surface: '280 25% 8%',
+            text: '300 100% 98%',
+            primary: '325 100% 48%',
+            accent: '260 100% 68%',
+            border: '280 20% 15%'
+          },
+          typography: {
+            headingFont: 'font-outfit',
+            bodyFont: 'font-sans'
+          }
+        },
+        layout_components: {
+          heroStyle: 'hero-9',
+          projectsStyle: 'masonry',
+          skillsStyle: 'cloud',
+          aboutStyle: 'timeline',
+          contactStyle: 'social',
+          navigationStyle: 'dock',
+          sectionOrder: ['navigation', 'hero', 'about', 'skills', 'projects', 'contact']
+        }
+      }
+    };
+
+    if (selected_theme && selected_theme !== portfolio.selected_theme) {
+      portfolio.selected_theme = selected_theme;
+      if (themePresets[selected_theme]) {
+        portfolio.design_system = themePresets[selected_theme].design_system;
+        portfolio.layout_components = themePresets[selected_theme].layout_components;
+      }
+    } else {
+      if (layout_components) {
+        portfolio.layout_components = {
+          ...portfolio.layout_components?.toObject?.() || portfolio.layout_components,
+          ...layout_components
+        };
+      }
+      if (design_system) {
+        portfolio.design_system = {
+          ...portfolio.design_system?.toObject?.() || portfolio.design_system,
+          ...design_system
+        };
+      }
     }
     if (customization) {
       if (customization.social_links) {
