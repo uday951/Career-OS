@@ -81,7 +81,7 @@ Return a JSON object (no markdown, no code blocks) with:
 }`;
 
   try {
-    const response = await askAI(prompt);
+    const response = await askAI("You are an expert ATS (Applicant Tracking System) analyzer and career coach.", prompt, true);
     const parsed = typeof response === 'string' ? JSON.parse(response) : response;
     
     return {

@@ -9,12 +9,20 @@ const MODEL = 'deepseek-chat';
  * Base AI wrapper function
  */
 export const askAI = async (systemPrompt, userPrompt, jsonMode = true) => {
+  let finalSystemPrompt = systemPrompt;
+  let finalUserPrompt = userPrompt;
+
+  if (userPrompt === undefined) {
+    finalSystemPrompt = 'You are a helpful AI assistant.';
+    finalUserPrompt = systemPrompt;
+  }
+
   try {
     const payload = {
       model: MODEL,
       messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt }
+        { role: 'system', content: finalSystemPrompt },
+        { role: 'user', content: finalUserPrompt }
       ],
       response_format: jsonMode ? { type: 'json_object' } : undefined,
     };

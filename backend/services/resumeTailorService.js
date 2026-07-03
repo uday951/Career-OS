@@ -22,7 +22,7 @@ Requirements:
 Return ONLY the rewritten summary text, no JSON, no markdown.`;
 
   try {
-    const response = await askAI(prompt);
+    const response = await askAI("You are an expert resume writer and career coach.", prompt, false);
     return (typeof response === 'string' ? response : response.text || '').trim();
   } catch (error) {
     console.error('Tailor summary error:', error.message);
@@ -58,8 +58,11 @@ Return ONLY the rewritten experience as a JSON array of strings (no markdown, no
 ["Rewritten bullet 1", "Rewritten bullet 2"]`;
 
   try {
-    const response = await askAI(prompt);
-    const text = typeof response === 'string' ? response : response.text || '';
+    const response = await askAI("You are an expert resume writer and career coach.", prompt, true);
+    if (Array.isArray(response)) {
+      return response;
+    }
+    const text = typeof response === 'string' ? response : JSON.stringify(response);
     const cleaned = text.replace(/```json|```/g, '').trim();
     return JSON.parse(cleaned);
   } catch (error) {

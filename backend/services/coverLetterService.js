@@ -48,7 +48,7 @@ Requirements:
 Return ONLY the cover letter text, no JSON, no markdown, no extra commentary.`;
 
   try {
-    const response = await askAI(prompt);
+    const response = await askAI("You are a professional copywriter writing personalized cover letters.", prompt, false);
     const text = typeof response === 'string' ? response : response.text || '';
     return text.trim();
   } catch (error) {
